@@ -9,3 +9,9 @@ npm-debug.log*
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Environments and Secrets
+.env
+.env.local
+.env.*.local
+

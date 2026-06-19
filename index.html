@@ -228,7 +228,7 @@
                                 <button id="select-files-btn" class="bg-[#0D9488] text-white px-6 py-3 rounded-lg font-label-md font-bold hover:bg-[#0F766E] transition-colors min-h-[48px] shadow-sm">
                                     Select Files
                                 </button>
-                                <button onclick="alert('Viewing secure document vault (simulation).')" class="border border-outline-variant bg-transparent text-primary-container px-6 py-3 rounded-lg font-label-md font-bold hover:bg-surface-variant transition-colors min-h-[48px]">
+                                <button onclick="openVault()" class="border border-outline-variant bg-transparent text-primary-container px-6 py-3 rounded-lg font-label-md font-bold hover:bg-surface-variant transition-colors min-h-[48px]">
                                     Browse Vault
                                 </button>
                             </div>
@@ -892,6 +892,39 @@
                 </button>
                 <button id="quiz-submit-btn" form="quiz-form" type="submit" class="bg-secondary hover:bg-on-secondary-fixed text-white font-bold py-2 px-4 rounded-lg min-h-[40px] text-xs shadow-sm">
                     Submit Diagnostic
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECURE DOCUMENT VAULT MODAL -->
+    <div id="vault-modal" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 hidden justify-center items-center p-4">
+        <div class="bg-white rounded-xl border border-outline-variant max-w-2xl w-full overflow-hidden shadow-lg flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="bg-surface-container-low border-b border-outline-variant px-6 py-4 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2 text-primary font-bold text-lg">
+                    <span class="material-symbols-outlined text-secondary fill">shield_lock</span>
+                    <h3>Secure Document Vault</h3>
+                </div>
+                <button id="close-vault-btn" class="text-on-surface-variant hover:text-primary">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="flex-grow overflow-y-auto p-6 bg-[#f8f9ff]">
+                <p class="font-body-sm text-xs text-on-surface-variant mb-4 leading-relaxed">
+                    Select a document stored in your secure client-side vault to parse its parameters and update your financial roadmap.
+                </p>
+                <div id="vault-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Populated dynamically by app.js -->
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="bg-surface-container-low border-t border-outline-variant px-6 py-4 flex justify-end gap-3 shrink-0">
+                <button id="close-vault-footer-btn" class="border border-outline-variant bg-transparent text-primary hover:bg-surface-variant font-bold py-2 px-4 rounded-lg min-h-[40px] text-xs">
+                    Close Vault
                 </button>
             </div>
         </div>

@@ -17,7 +17,49 @@ const state = {
         { id: "Case #492-A", type: "Classification Review", date: "Oct 12, 2023", status: "In Progress", progress: 50, explanation: "Awaiting Employer Response" }
     ],
     quizScore: 0,
-    currentDisputeLetter: ""
+    currentDisputeLetter: "",
+    vault: [
+        {
+            id: "vault-1",
+            name: "Seattle_Tech_Severance.pdf",
+            size: "2.8 MB",
+            date: "Jun 10, 2026",
+            description: "Severance agreement from Seattle, WA. Contains 12 weeks severance terms and separation date of June 30, 2026.",
+            text: "Separation Agreement and Release of Claims. Employee: Jane Doe. Employer: Seattle Tech Systems (Seattle, WA). Separation Date: June 30, 2026. The Company agrees to provide severance pay equal to 12 weeks of employee's base salary."
+        },
+        {
+            id: "vault-2",
+            name: "Stitch_Tech_W2_2025.pdf",
+            size: "1.4 MB",
+            date: "Jan 25, 2026",
+            description: "Form W-2 Wage and Tax Statement. Shows annual W-2 wages of $88,000 in Washington state.",
+            text: "Form W-2 Wage and Tax Statement 2025. Employer: Stitch Tech Systems. Employee: Jane Doe. Box 1 Wages, tips, other comp: $88000. Box 15 State: WA. Q1 wages: $22000. Q2 wages: $22000. Q3 wages: $22000. Q4 wages: $22000."
+        },
+        {
+            id: "vault-3",
+            name: "CA_Severance_JaneDoe.pdf",
+            size: "2.1 MB",
+            date: "Jun 18, 2026",
+            description: "California separation agreement. Includes 6 weeks of continuation pay with separation date of August 1, 2026.",
+            text: "Separation Agreement and Release. Employee Jane Doe. Employer: California Tech Solutions. State: CA. Separation Date: August 1, 2026. Severance compensation: 6 weeks of continuation pay."
+        },
+        {
+            id: "vault-4",
+            name: "TX_Termination_Continuation.pdf",
+            size: "1.9 MB",
+            date: "May 14, 2026",
+            description: "Texas termination letter. Details 8 weeks severance package and separation date of September 15, 2026.",
+            text: "Termination Notice. Employer: Texas Enterprise Corp. Employee: Jane Doe. Separation date: September 15, 2026. You will receive severance payment in the form of salary continuation for 8 weeks. Governing law: State of Texas (TX)."
+        },
+        {
+            id: "vault-5",
+            name: "1099_NEC_Consulting_Fees.pdf",
+            size: "1.2 MB",
+            date: "Feb 12, 2026",
+            description: "Form 1099-NEC Nonemployee Compensation. Shows $52,000 consulting payments in Florida.",
+            text: "Form 1099-NEC Nonemployee Compensation. Payer: Florida Consulting Group. Recipient: Jane Doe. Box 1 Nonemployee compensation: $52000. State: FL."
+        }
+    ]
 };
 
 // Initialize app when DOM loads
@@ -27,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initRoadmapDashboard();
     initAdvocacyCenter();
     initDisputeLetterEditor();
+    initVault();
     
     // Perform initial calculations
     updateCalculations();
@@ -1242,3 +1285,144 @@ window.viewActiveDispute = function(caseId) {
     // Simulate loading the dispute document in the editor
     generateDispute(dispute.type.includes("1099") ? "1099" : "cause");
 };
+
+// 7. Secure Document Vault UI Controller
+function initVault() {
+    const vaultModal = document.getElementById("vault-modal");
+    const closeVaultBtn = document.getElementById("close-vault-btn");
+    const closeVaultFooterBtn = document.getElementById("close-vault-footer-btn");
+
+    // Connect modal opening and closing
+    window.openVault = function() {
+        if (vaultModal) {
+            vaultModal.classList.remove("hidden");
+            vaultModal.classList.add("flex");
+            renderVault();
+        }
+    };
+
+    window.closeVault = function() {
+        if (vaultModal) {
+            vaultModal.classList.add("hidden");
+            vaultModal.classList.remove("flex");
+        }
+    };
+
+    if (closeVaultBtn) {
+        closeVaultBtn.addEventListener("click", () => {
+            window.closeVault();
+        });
+    }
+
+    if (closeVaultFooterBtn) {
+        closeVaultFooterBtn.addEventListener("click", () => {
+            window.closeVault();
+        });
+    }
+
+    window.importVaultDocument = function(id) {
+        const item = state.vault.find(doc => doc.id === id);
+        if (!item) return;
+
+        // Check if already uploaded
+        const alreadyUploaded = state.uploads.some(u => u.name === item.name);
+        if (alreadyUploaded) {
+            showToast(`"${item.name}" is already imported.`, 'error');
+            window.closeVault();
+            return;
+        }
+
+        // Add to active uploads
+        const newUpload = {
+            id: Date.now(),
+            name: item.name,
+            size: item.size,
+            date: "Today, " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            status: "Analyzing",
+            type: item.name.split(".").pop().toLowerCase(),
+            text: item.text
+        };
+
+        state.uploads.unshift(newUpload);
+        renderUploads();
+        window.closeVault();
+
+        // Simulate parsing block with custom delay for premium feel
+        setTimeout(() => {
+            simulateParsing(newUpload);
+            showToast(`Successfully imported and parsed "${item.name}" from Vault!`);
+        }, 800);
+    };
+
+    renderVault();
+}
+
+function renderVault() {
+    const list = document.getElementById("vault-list");
+    if (!list) return;
+
+    list.innerHTML = "";
+    state.vault.forEach(item => {
+        const icon = item.name.endsWith(".pdf") ? "picture_as_pdf" : "description";
+        
+        list.innerHTML += `
+            <div onclick="importVaultDocument('${item.id}')" 
+                 class="border border-outline-variant bg-surface-container-lowest p-4 rounded-xl hover:border-[#0D9488] hover:bg-surface-container-low transition-all duration-300 cursor-pointer flex flex-col justify-between group shadow-sm hover:shadow-md">
+                <div class="flex items-start gap-3">
+                    <div class="w-10 h-10 bg-[#eff4ff] text-[#0D9488] flex items-center justify-center rounded-lg border border-[#dce9ff] group-hover:bg-[#dce9ff] transition-colors shrink-0">
+                        <span class="material-symbols-outlined">${icon}</span>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-label-md text-on-surface font-bold text-sm text-primary mb-1 group-hover:text-[#0D9488] transition-colors">${item.name}</h4>
+                        <p class="font-body-sm text-xs text-on-surface-variant line-clamp-2 leading-relaxed">${item.description}</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-3 border-t border-outline-variant/30 flex justify-between items-center text-[11px] text-outline font-semibold">
+                    <span>${item.date} • ${item.size}</span>
+                    <span class="flex items-center gap-1 text-[#0d9488] font-bold group-hover:text-primary transition-colors">
+                        Import & Parse <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </span>
+                </div>
+            </div>
+        `;
+    });
+}
+
+// Sleek Toast Notification System
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none';
+        document.body.appendChild(container);
+    }
+    
+    const toast = document.createElement('div');
+    toast.className = `p-4 rounded-lg shadow-lg border text-white font-label-md flex items-center gap-2 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto max-w-sm ${
+        type === 'success' 
+            ? 'bg-[#006a61] border-[#86f2e4]' 
+            : type === 'error' 
+                ? 'bg-[#ba1a1a] border-[#ffb4ab]' 
+                : 'bg-primary border-outline-variant'
+    }`;
+    
+    const icon = type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info';
+    toast.innerHTML = `
+        <span class="material-symbols-outlined text-[20px]">${icon}</span>
+        <span class="text-xs font-semibold">${message}</span>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-[-10px]');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 3000);
+}

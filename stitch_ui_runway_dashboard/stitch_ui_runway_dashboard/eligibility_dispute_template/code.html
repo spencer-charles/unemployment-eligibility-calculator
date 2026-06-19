@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dispute Generator Result - UI Runway</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#ffffff",
+                      "background": "#f8f9ff",
+                      "primary-fixed": "#d8e3fb",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "tertiary": "#111516",
+                      "surface-variant": "#d3e4fe",
+                      "on-secondary-fixed": "#00201d",
+                      "secondary-container": "#86f2e4",
+                      "on-tertiary-fixed": "#191c1e",
+                      "primary-fixed-dim": "#bcc7de",
+                      "error": "#ba1a1a",
+                      "inverse-primary": "#bcc7de",
+                      "primary-container": "#1e293b",
+                      "on-background": "#0b1c30",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed": "#111c2d",
+                      "on-tertiary-container": "#8d9092",
+                      "surface": "#f8f9ff",
+                      "surface-dim": "#cbdbf5",
+                      "outline-variant": "#c5c6cd",
+                      "surface-tint": "#545f73",
+                      "surface-container": "#e5eeff",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "tertiary-container": "#26292b",
+                      "secondary": "#006a61",
+                      "surface-container-low": "#eff4ff",
+                      "tertiary-fixed": "#e0e3e5",
+                      "surface-bright": "#f8f9ff",
+                      "on-error": "#ffffff",
+                      "on-secondary-container": "#006f66",
+                      "primary": "#091426",
+                      "on-surface-variant": "#45474c",
+                      "on-secondary-fixed-variant": "#005049",
+                      "on-error-container": "#93000a",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-high": "#dce9ff",
+                      "on-primary-container": "#8590a6",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#3c475a",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#d3e4fe",
+                      "secondary-fixed-dim": "#6bd8cb",
+                      "secondary-fixed": "#89f5e7",
+                      "outline": "#75777d",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-surface": "#0b1c30",
+                      "inverse-surface": "#213145"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter-md": "24px",
+                      "margin-desktop": "48px",
+                      "unit": "4px",
+                      "gutter-sm": "16px",
+                      "margin-mobile": "16px",
+                      "max-width": "1200px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Public Sans"],
+                      "headline-md": ["Public Sans"],
+                      "body-md": ["Public Sans"],
+                      "body-sm": ["Public Sans"],
+                      "label-sm": ["Public Sans"],
+                      "label-md": ["Public Sans"],
+                      "headline-lg-mobile": ["Public Sans"],
+                      "headline-sm": ["Public Sans"],
+                      "body-lg": ["Public Sans"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "14px", "fontWeight": "500"}],
+                      "label-md": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar for the letter preview */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f8f9ff;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c5c6cd;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #75777d;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md flex min-h-screen antialiased">
+<!-- SideNavBar (Shared Component) -->
+<nav class="h-full w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col p-4 space-y-4 shadow-sm z-20 hidden md:flex border-r border-outline-variant">
+<!-- Header -->
+<div class="flex items-center gap-3 px-2 py-4 mb-4 border-b border-outline-variant">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm text-headline-sm">
+<span class="material-symbols-outlined icon-fill">shield_person</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">Financial Advocacy</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Secure Session Active</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col space-y-1 flex-1">
+<!-- Intake (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="cloud_upload">cloud_upload</span>
+                Intake
+            </a>
+<!-- Roadmap (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard_customize">dashboard_customize</span>
+                Roadmap
+            </a>
+<!-- Advocacy (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold font-label-md text-label-md transition-all scale-95 origin-left" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="gavel" data-weight="fill">gavel</span>
+                Advocacy
+            </a>
+<!-- Settings (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md text-label-md transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+</div>
+<!-- CTA -->
+<div class="mt-auto pt-4">
+<button class="w-full py-3 px-4 border border-outline rounded-lg text-primary font-label-md text-label-md flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-sm">support_agent</span>
+                Get Support
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col w-full">
+<!-- Top Padding & Header Area -->
+<div class="px-margin-mobile md:px-margin-desktop pt-margin-desktop pb-gutter-md w-full max-w-max-width mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Dispute Letter Generated</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Your formal eligibility dispute has been drafted based on your provided documentation.</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-secondary icon-fill text-sm">verified_user</span>
+<span class="font-label-sm text-label-sm text-on-surface">Legally Reviewed Template</span>
+</div>
+</div>
+</div>
+<!-- Content Grid -->
+<div class="px-margin-mobile md:px-margin-desktop pb-margin-desktop w-full max-w-max-width mx-auto flex-1">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-md h-full">
+<!-- Left Column: Letter Preview (Spans 8 cols) -->
+<div class="lg:col-span-8 flex flex-col h-full">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm flex flex-col h-[700px] overflow-hidden">
+<!-- Toolbar -->
+<div class="bg-surface-container-low border-b border-outline-variant px-4 py-3 flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                                Document Preview
+                            </span>
+<div class="flex gap-2">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-variant rounded-md transition-colors" title="Print">
+<span class="material-symbols-outlined text-[20px]">print</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-variant rounded-md transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-[20px]">zoom_in</span>
+</button>
+</div>
+</div>
+<!-- Letter Content Canvas -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-8 md:p-12 bg-white relative">
+<!-- Simulated Watermark -->
+<div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none">
+<span class="font-headline-lg text-headline-lg transform -rotate-45 text-on-background text-9xl font-bold tracking-widest whitespace-nowrap">DRAFT</span>
+</div>
+<div class="max-w-3xl mx-auto space-y-6 text-on-background relative z-10">
+<!-- Header Info -->
+<div class="border-b border-outline-variant pb-6 mb-6">
+<div class="text-right font-body-sm text-body-sm text-on-surface-variant mb-6">
+                                        Date: October 26, 2023
+                                    </div>
+<div class="space-y-1 font-body-md text-body-md">
+<p class="font-bold">VIA CERTIFIED MAIL &amp; EMAIL</p>
+<p>Human Resources Department</p>
+<p>Acme Corporation</p>
+<p>123 Corporate Blvd, Suite 400</p>
+<p>Metropolis, NY 10001</p>
+</div>
+</div>
+<!-- Subject Line -->
+<div class="font-headline-sm text-headline-sm font-bold text-primary">
+                                    RE: Formal Dispute of Severance Eligibility Determination - [Your Name]
+                                </div>
+<!-- Body Paragraphs -->
+<div class="space-y-4 font-body-md text-body-md leading-relaxed text-on-surface">
+<p>To Whom It May Concern,</p>
+<p>I am writing to formally dispute the determination regarding my eligibility for the recent severance package, as communicated to me on October 15, 2023. Based on the terms outlined in the Employee Handbook (Section 4.2) and my employment contract dated March 12, 2019, I believe this determination is incorrect.</p>
+<p>According to the provided documentation, employees with a tenure exceeding four years and maintaining a "Meets Expectations" or higher performance rating are eligible for standard transition benefits. I have served the company for 4.5 years and my most recent performance review (Q3 2023) reflects an "Exceeds Expectations" rating.</p>
+<div class="pl-4 border-l-2 border-secondary py-2 my-4 bg-surface-container-low">
+<p class="font-label-md text-label-md text-on-surface-variant mb-1">Supporting Documentation Enclosed:</p>
+<ul class="list-disc list-inside space-y-1 font-body-sm text-body-sm text-on-surface">
+<li>Exhibit A: Employment Contract (03/12/2019)</li>
+<li>Exhibit B: Q3 2023 Performance Review</li>
+<li>Exhibit C: Severance Policy Excerpt (Handbook v2.4)</li>
+</ul>
+</div>
+<p>I kindly request a formal review of my file and a correction of my eligibility status within ten (10) business days of receiving this notice. I am prepared to escalate this matter further if a resolution cannot be reached internally, but it is my hope we can resolve this amicably based on the established policy.</p>
+<p>Please confirm receipt of this dispute letter and direct all future correspondence regarding this matter to my personal email address listed below.</p>
+</div>
+<!-- Sign-off -->
+<div class="pt-8 space-y-1 font-body-md text-body-md">
+<p>Sincerely,</p>
+<p class="mt-4 font-bold">[Your Name]</p>
+<p class="text-on-surface-variant">[Your Phone Number]</p>
+<p class="text-on-surface-variant">[Your Personal Email]</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Actions & Context (Spans 4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Primary Actions Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-4">Letter Actions</h2>
+<div class="space-y-3">
+<button class="w-full flex items-center justify-center gap-2 bg-secondary text-on-secondary font-label-md text-label-md py-3 px-4 rounded-lg hover:opacity-90 transition-opacity h-12">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                                Download PDF
+                            </button>
+<button class="w-full flex items-center justify-center gap-2 bg-transparent border border-outline text-on-surface font-label-md text-label-md py-3 px-4 rounded-lg hover:bg-surface-variant transition-colors h-12">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                                Email to HR
+                            </button>
+<button class="w-full flex items-center justify-center gap-2 bg-transparent text-primary font-label-md text-label-md py-3 px-4 rounded-lg hover:bg-surface-container transition-colors h-12 mt-2">
+<span class="material-symbols-outlined text-[20px]">edit_document</span>
+                                Edit Details
+                            </button>
+</div>
+</div>
+<!-- Context & Next Steps Card -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-6 relative overflow-hidden">
+<!-- Decorative Top Border -->
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary"></div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-5 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">gavel</span>
+                            Legal Context
+                        </h3>
+<div class="space-y-5">
+<!-- Point 1 -->
+<div class="flex gap-3">
+<div class="mt-0.5">
+<div class="w-6 h-6 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary font-label-sm">1</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Tone &amp; Clarity</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">This template is structured to be assertive yet professional. It removes emotional language and focuses strictly on policy and factual discrepancies, which is critical for administrative reviews.</p>
+</div>
+</div>
+<!-- Point 2 -->
+<div class="flex gap-3">
+<div class="mt-0.5">
+<div class="w-6 h-6 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary font-label-sm">2</div>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-1">Establishing a Record</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Sending this via documented channels (certified mail or tracked email) creates a legally recognizable "paper trail" should further mediation or external counsel be required.</p>
+</div>
+</div>
+<hr class="border-outline-variant opacity-50 my-4"/>
+<!-- Next Steps -->
+<div>
+<h4 class="font-label-md text-label-md text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">route</span>
+                                    Next Steps
+                                </h4>
+<ul class="space-y-2 font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5">check_circle</span>
+                                        Download and review the final PDF.
+                                    </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5">check_circle</span>
+                                        Attach the referenced exhibits (A, B, C).
+                                    </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5">check_circle</span>
+                                        Send to HR and await their response within 10 days.
+                                    </li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Security Badge -->
+<div class="flex items-center justify-center gap-2 text-on-surface-variant font-label-sm text-label-sm mt-auto pt-4">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+                        Your data is encrypted and securely stored.
+                    </div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

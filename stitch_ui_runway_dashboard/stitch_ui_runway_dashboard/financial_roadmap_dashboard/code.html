@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Financial Roadmap Dashboard - UI Runway</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "background": "#f8f9ff",
+                        "primary-fixed": "#d8e3fb",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "tertiary": "#111516",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary-fixed": "#00201d",
+                        "secondary-container": "#86f2e4",
+                        "on-tertiary-fixed": "#191c1e",
+                        "primary-fixed-dim": "#bcc7de",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#bcc7de",
+                        "primary-container": "#1e293b",
+                        "on-background": "#0b1c30",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#111c2d",
+                        "on-tertiary-container": "#8d9092",
+                        "surface": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "outline-variant": "#c5c6cd",
+                        "surface-tint": "#545f73",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "tertiary-container": "#26292b",
+                        "secondary": "#006a61",
+                        "surface-container-low": "#eff4ff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "surface-bright": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#006f66",
+                        "primary": "#091426",
+                        "on-surface-variant": "#45474c",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#dce9ff",
+                        "on-primary-container": "#8590a6",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#d3e4fe",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "secondary-fixed": "#89f5e7",
+                        "outline": "#75777d",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-surface": "#0b1c30",
+                        "inverse-surface": "#213145"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter-md": "24px",
+                        "margin-desktop": "48px",
+                        "unit": "4px",
+                        "gutter-sm": "16px",
+                        "margin-mobile": "16px",
+                        "max-width": "1200px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "body-sm": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "label-md": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "body-lg": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "14px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .glass-card {
+                @apply bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-gutter-sm md:p-gutter-md;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased flex">
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex flex-col h-full w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-lowest border-r border-surface-container dark:border-tertiary-container shadow-sm p-4 space-y-4 z-40">
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-2">
+<img alt="Secure user profile" class="w-10 h-10 rounded-full object-cover" data-alt="A small, professional, circular avatar representing a secure user profile in a high-end corporate setting. The lighting is soft and even, highlighting a generic silhouette against a muted, calming background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVRnQWkwkcyMS5-Tc346Jb-tVZyxmaEzDtAcTwgneE1tlMYwKjMHqquL5Dwz_5puZXcHJaIgdrenYlH2bh-pgLCjp-Yk-b5u22bwcAyWwyDQkJ-pGOPETUO0KvvCU8SNRrUOMe3Y6j7UlLoNSy_vpw9vkczwnFfhqtUNohjqbnkYPJRetCpCp7N1lL35NzMEqYt7LofCgGHj15sTm0TeHitPbd0l5zybRiHVDRzdOMUekr6EpNg6wepLIv0yxVvm-b4hg34eH_7Q"/>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">UI Runway</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Financial Advocacy</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container/30 text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                Secure Session Active
+            </span>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+                    Intake
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-bold transition-all scale-95 duration-100 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard_customize</span>
+                    Roadmap
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined">gavel</span>
+                    Advocacy
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<button class="mt-auto w-full py-3 bg-[#0D9488] text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 hover:bg-[#0f766e] transition-colors">
+<span class="material-symbols-outlined">support_agent</span>
+            Get Support
+        </button>
+</nav>
+<!-- TopAppBar (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center w-full px-margin-mobile bg-surface dark:bg-surface-dim docked full-width top-0 border-b border-outline-variant dark:border-outline py-3 fixed z-50">
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">UI Runway</h1>
+<div class="flex items-center gap-4 text-primary dark:text-primary-fixed">
+<button aria-label="notifications" class="hover:text-secondary-container transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button aria-label="help_outline" class="hover:text-secondary-container transition-colors"><span class="material-symbols-outlined">help_outline</span></button>
+<img alt="User profile and security status" class="w-8 h-8 rounded-full object-cover" data-alt="A small, professional, circular avatar representing a secure user profile in a high-end corporate setting. The lighting is soft and even, highlighting a generic silhouette against a muted, calming background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqVw6zTboWe9tgn7uWopey6Dkluk4mcPrskSl9Ebk7c1aVHf2wHj6-LaZbeMwSPTmplFYJXNChBkn3FCmkDu-D9qoyetXJirzkZs0k4-8tmJiTdcHqHz06OopV9SX95G2rNUq21JQSq5acTIX6iKTPHuTV4rPtAXg27sdOt2gT4tpVF-0hLT92Tkc26G2xlckH1RN_pJ61wOs4CpO8rckwcwZ-B1Xusqz4vAISEvl-pgRytR1dsYWGfmRZXTztEJAYgnoUbdzAlw"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-20 md:pt-margin-desktop px-margin-mobile md:px-margin-desktop pb-32 md:pb-margin-desktop max-w-max-width mx-auto w-full">
+<header class="mb-gutter-md">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Financial Roadmap Dashboard</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Navigate your transition timeline and benefit eligibility with clarity.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-sm md:gap-gutter-md">
+<!-- Severance Clock - Hero Widget -->
+<section class="lg:col-span-8 glass-card flex flex-col justify-center relative overflow-hidden bg-[#091426] text-white">
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 50% -20%, #86f2e4 0%, transparent 70%);"></div>
+<div class="relative z-10 p-4">
+<div class="flex items-center gap-2 mb-6 text-inverse-primary font-label-md text-label-md">
+<span class="material-symbols-outlined">timer</span>
+<h2>Severance Exhaustion Clock</h2>
+</div>
+<div class="flex flex-col md:flex-row items-end md:items-center justify-between gap-6">
+<div>
+<p class="font-body-md text-body-md text-primary-fixed-dim mb-1">Unemployment Eligibility Date</p>
+<h3 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-2">Oct 14, 2024</h3>
+<div class="flex gap-4">
+<div class="text-center">
+<span class="block text-3xl font-semibold text-secondary-fixed">42</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim uppercase tracking-wider">Days</span>
+</div>
+<div class="text-center">
+<span class="block text-3xl font-semibold text-secondary-fixed">14</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim uppercase tracking-wider">Hrs</span>
+</div>
+</div>
+</div>
+<div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm border border-white/20 text-right w-full md:w-auto">
+<p class="font-label-sm text-label-sm text-primary-fixed-dim uppercase mb-1">Current Status</p>
+<p class="font-headline-sm text-headline-sm text-secondary-fixed flex items-center justify-end gap-2">
+<span class="material-symbols-outlined">shield</span>
+                                Severance Active
+                            </p>
+</div>
+</div>
+<div class="mt-8">
+<div class="flex justify-between font-label-sm text-label-sm text-primary-fixed-dim mb-2">
+<span>Separation Date (Aug 15)</span>
+<span>Eligibility Date (Oct 14)</span>
+</div>
+<div class="h-2 w-full bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-secondary-fixed w-[30%] rounded-full relative">
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Base Period Validator -->
+<section class="lg:col-span-4 glass-card flex flex-col">
+<div class="flex items-center gap-2 mb-4 text-primary font-headline-sm text-headline-sm border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-secondary">fact_check</span>
+<h2>Base Period Validator</h2>
+</div>
+<div class="flex-1 flex flex-col justify-center">
+<div class="flex items-start gap-4 mb-6 p-4 rounded-lg bg-[#eff4ff]">
+<span class="material-symbols-outlined text-[#006a61] text-3xl mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<h3 class="font-label-md text-label-md text-primary mb-1">Quarters Qualified</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sufficient wages earned in 4 of 4 required base period quarters.</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Q2 2023</span>
+<span class="font-label-md text-label-md text-primary">$18,500</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Q3 2023</span>
+<span class="font-label-md text-label-md text-primary">$18,500</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Q4 2023</span>
+<span class="font-label-md text-label-md text-primary">$19,200</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">High Quarter</span>
+<span class="font-label-md text-label-md text-secondary">$19,200</span>
+</div>
+</div>
+</div>
+</section>
+<!-- State-Adjusted Benefit Estimator -->
+<section class="lg:col-span-6 glass-card">
+<div class="flex items-center justify-between mb-6 border-b border-outline-variant pb-2">
+<div class="flex items-center gap-2 text-primary font-headline-sm text-headline-sm">
+<span class="material-symbols-outlined text-secondary">account_balance</span>
+<h2>Benefit Estimator</h2>
+</div>
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span>
+                        Florida
+                    </span>
+</div>
+<div class="flex flex-col md:flex-row gap-6 items-center">
+<div class="w-full md:w-1/2 p-6 rounded-xl border border-[#CBD5E1] bg-surface-bright text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 text-[#ba1a1a] bg-[#ffdad6] rounded-bl-lg font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                            State Cap
+                        </div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Estimated Weekly Benefit</p>
+<p class="text-4xl font-bold text-primary mb-1">$275<span class="text-lg text-on-surface-variant font-normal">/wk</span></p>
+<p class="font-label-sm text-label-sm text-[#ba1a1a] mt-2">Capped by FL State Maximum</p>
+</div>
+<div class="w-full md:w-1/2 space-y-4">
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface-variant">Calculated Benefit</span>
+<span class="text-primary font-medium">$738/wk</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant w-full rounded-full relative"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-body-sm text-body-sm mb-1">
+<span class="text-on-surface-variant font-medium text-primary">Actual Eligible (FL Cap)</span>
+<span class="text-secondary font-medium">$275/wk</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[37%] rounded-full relative"></div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-surface-container-low rounded border border-outline-variant/30 font-body-sm text-body-sm text-on-surface-variant flex gap-2 items-start">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">info</span>
+<p>Based on your high quarter earnings, you qualify for $738/wk, but Florida law caps maximum weekly benefits at $275.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Document Readiness Checklist -->
+<section class="lg:col-span-6 glass-card">
+<div class="flex items-center gap-2 mb-6 text-primary font-headline-sm text-headline-sm border-b border-outline-variant pb-2">
+<span class="material-symbols-outlined text-secondary">folder_special</span>
+<h2>Filing Readiness</h2>
+</div>
+<div class="space-y-0">
+<div class="flex items-center justify-between p-3 bg-white border border-b-0 border-outline-variant/50 rounded-t-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#006a61]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-primary">State ID / Driver's License</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-1 bg-[#dce9ff] text-[#006a61] rounded">Verified</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-bright border border-b-0 border-outline-variant/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#006a61]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-primary">Severance Agreement</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-1 bg-[#dce9ff] text-[#006a61] rounded">Uploaded</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-[#fff8f6] border border-[#CBD5E1] rounded-b-lg border-l-4 border-l-[#091426]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#091426]">error</span>
+<span class="font-body-md text-body-md text-primary font-medium">W-2 Form (Last Year)</span>
+</div>
+<button class="font-label-sm text-label-sm px-3 py-1 bg-transparent border border-outline text-primary rounded hover:bg-surface-variant transition-colors">Upload</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-surface dark:bg-inverse-surface border-t border-outline-variant docked full-width bottom-0 rounded-t-xl shadow-md pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="font-label-sm text-label-sm mt-1">Intake</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-2 scale-90 duration-200 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">query_stats</span>
+<span class="font-label-sm text-label-sm mt-1 font-bold">Roadmap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">security</span>
+<span class="font-label-sm text-label-sm mt-1">Advocacy</span>
+</a>
+</nav>
+</body></html>

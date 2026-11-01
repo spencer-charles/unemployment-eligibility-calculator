@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>UI Runway - Financial & Legal Advocacy Dashboard</title>
+    <title>UI Runway - Unemployment Eligibility &amp; Financial Runway Calculator</title>
     <!-- Tailwind CSS with Forms and Container Queries Plugins -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -79,15 +79,15 @@
                         "max-width": "1200px"
                     },
                     "fontFamily": {
-                        "headline-lg": ["Public Sans"],
-                        "headline-md": ["Public Sans"],
-                        "body-md": ["Public Sans"],
-                        "body-sm": ["Public Sans"],
-                        "label-sm": ["Public Sans"],
-                        "label-md": ["Public Sans"],
-                        "headline-lg-mobile": ["Public Sans"],
-                        "headline-sm": ["Public Sans"],
-                        "body-lg": ["Public Sans"]
+                        "headline-lg": ["Public Sans", "sans-serif"],
+                        "headline-md": ["Public Sans", "sans-serif"],
+                        "body-md": ["Public Sans", "sans-serif"],
+                        "body-sm": ["Public Sans", "sans-serif"],
+                        "label-sm": ["Public Sans", "sans-serif"],
+                        "label-md": ["Public Sans", "sans-serif"],
+                        "headline-lg-mobile": ["Public Sans", "sans-serif"],
+                        "headline-sm": ["Public Sans", "sans-serif"],
+                        "body-lg": ["Public Sans", "sans-serif"]
                     },
                     "fontSize": {
                         "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
@@ -134,66 +134,71 @@
 </head>
 <body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col md:flex-row overflow-x-hidden">
 
-    <!-- TopAppBar for Mobile (Shared Component) -->
+    <!-- TopAppBar for Mobile -->
     <header class="md:hidden bg-surface text-primary font-headline-sm flex justify-between items-center w-full px-margin-mobile border-b border-outline-variant h-16 shrink-0 z-40">
         <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-secondary font-bold">flight_takeoff</span>
             <span class="font-headline-md font-bold text-primary">UI Runway</span>
         </div>
-        <div class="flex items-center gap-4 text-on-surface-variant">
-            <span class="material-symbols-outlined">notifications</span>
-            <span class="material-symbols-outlined">help_outline</span>
-            <img alt="User profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNUrzinyCss4-nFDZK2Hm-v1zGQAipGBEY-kWagwvQC9zl-E-pIq4n2DGVGb_VTx4k3fyCnGSB-ItVlByJBYIioO-UZVSMr8sFOu3BBUYAZoIbGF0RYSCEfUp2cKFiYoO16xA9p9PV3d3hLKb3qgbk0fP5YfGoTd09amjhP-_85hAujpzQLO9KrTdtHuNSMV3Vryer6vVkC4DAcsKqxymApVJtR8_K3UMKTMq7mhT9OxgBMxKFx17R9PDNc9WhkVIsq9wAR1qfHA"/>
+        <div class="flex items-center gap-3 text-on-surface-variant">
+            <button onclick="openSupportModal()" title="Resources &amp; Support" class="p-1.5 rounded-lg hover:bg-surface-container">
+                <span class="material-symbols-outlined">help_outline</span>
+            </button>
+            <button onclick="window.navigateToSection('settings')" title="Settings" class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container font-bold text-xs flex items-center justify-center border border-outline-variant">
+                JD
+            </button>
         </div>
     </header>
 
-    <!-- SideNavBar for Desktop (Shared Component) -->
+    <!-- SideNavBar for Desktop -->
     <nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low text-secondary border-r border-outline-variant shadow-sm z-30 p-4 space-y-4 shrink-0">
-        <div class="mb-8 px-2 flex flex-col gap-2 pt-4">
+        <div class="mb-6 px-2 flex flex-col gap-2 pt-4">
             <div class="flex items-center gap-2 text-primary">
-                <span class="material-symbols-outlined font-bold text-2xl">flight_takeoff</span>
+                <span class="material-symbols-outlined font-bold text-2xl text-secondary">flight_takeoff</span>
                 <span class="font-headline-sm font-bold">UI Runway</span>
             </div>
-            <div class="mt-4 flex items-center gap-3">
-                <img alt="Secure user profile" class="w-10 h-10 rounded-full border border-outline-variant object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2fJJz0C3nQJI19NAPcNBka7Kiquy31872Zjq1m13n-MaNR2L331iIg-FBMKXbdPKB5IfsKnRdSzs8p8jxkKBvwhhTtMAizhHc7zjJi4ghuFrrAi5uG1AH3gTLEooiddXZ_mdlp2KuDH5v1wcZ2XhY4auMmzGkyWfl3e_QK8nRGB_j21N62zLmV1QRBa7BRCb2hwucTb2pj2J2YYJQ27JePtBQ3fbqYCbNlZdA76tVkclqlJCZv-EMCv4oMui44s4jbOd8ex3QXg"/>
-                <div>
-                    <h2 class="font-label-md text-on-surface text-sm font-semibold truncate max-w-[120px]">Jane Doe</h2>
+            <div class="mt-4 flex items-center gap-3 p-2.5 rounded-xl bg-white/80 border border-outline-variant/50">
+                <div id="sidebar-avatar" class="w-10 h-10 rounded-full bg-secondary text-white font-bold text-sm flex items-center justify-center shrink-0">
+                    JD
+                </div>
+                <div class="overflow-hidden">
+                    <h2 id="sidebar-user-name" class="font-label-md text-on-surface text-sm font-semibold truncate">Jane Doe</h2>
                     <p class="font-label-sm text-on-surface-variant text-xs flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[10px] text-secondary">lock</span> Secure Active
+                        <span class="material-symbols-outlined text-[12px] text-secondary">lock</span> Local Sandbox
                     </p>
                 </div>
             </div>
         </div>
         <ul class="flex flex-col gap-2 flex-grow">
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold font-label-md transition-all" href="#intake">
+                <a data-nav="intake" class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold font-label-md transition-all" href="#intake">
                     <span class="material-symbols-outlined">cloud_upload</span>
                     Intake
                 </a>
             </li>
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all" href="#roadmap">
+                <a data-nav="roadmap" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all" href="#roadmap">
                     <span class="material-symbols-outlined">dashboard_customize</span>
                     Roadmap
                 </a>
             </li>
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all" href="#advocacy">
+                <a data-nav="advocacy" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all" href="#advocacy">
                     <span class="material-symbols-outlined">gavel</span>
                     Advocacy
                 </a>
             </li>
             <li>
-                <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all" href="#settings">
+                <a data-nav="settings" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all" href="#settings">
                     <span class="material-symbols-outlined">settings</span>
                     Settings
                 </a>
             </li>
         </ul>
         <div class="mt-auto pt-4">
-            <button class="w-full bg-[#0D9488] text-white py-3 rounded-lg font-label-md font-bold flex items-center justify-center gap-2 hover:bg-[#0F766E] transition-colors min-h-[48px]">
+            <button onclick="openSupportModal()" class="w-full bg-[#0D9488] text-white py-3 rounded-lg font-label-md font-bold flex items-center justify-center gap-2 hover:bg-[#0F766E] transition-colors min-h-[48px] shadow-sm">
                 <span class="material-symbols-outlined">support_agent</span>
-                Get Support
+                Filing &amp; Legal Aid
             </button>
         </div>
     </nav>
@@ -205,9 +210,30 @@
         <main id="section-intake" class="flex-grow bg-background overflow-y-auto w-full p-4 md:p-8">
             <div class="max-w-max-width mx-auto pb-24 md:pb-gutter-md">
                 <!-- Page Header -->
-                <div class="mb-gutter-md">
-                    <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Safe Landing Intake</h1>
-                    <p class="font-body-lg text-on-surface-variant max-w-2xl text-sm md:text-base">Securely upload your transition documents. We use local simulation to analyze your severance, benefits, and tax implications, translating legalese into actionable advocacy.</p>
+                <div class="mb-gutter-md flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">Safe Landing Intake</h1>
+                        <p class="font-body-lg text-on-surface-variant max-w-2xl text-sm md:text-base">Securely upload your transition documents. All parsing happens locally in your browser—analyzing severance clauses, state UI rules, and financial runway.</p>
+                    </div>
+                    <button onclick="window.navigateToSection('roadmap')" class="bg-primary text-white hover:bg-primary-container px-5 py-2.5 rounded-lg font-label-md text-xs font-bold flex items-center gap-2 w-fit shrink-0 transition-colors shadow-sm">
+                        <span>Open Financial Roadmap</span>
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Extraction Summary Banner (Shown after upload/parse) -->
+                <div id="intake-extraction-banner" class="hidden mb-6 bg-[#eff4ff] border border-[#86f2e4] rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-secondary text-2xl mt-0.5 fill">auto_awesome</span>
+                        <div>
+                            <h3 class="font-label-md text-sm font-bold text-primary">Transition Parameters Extracted &amp; Synced</h3>
+                            <p id="intake-extraction-summary" class="font-body-sm text-xs text-on-surface-variant mt-0.5">Your Financial Roadmap has been updated with the latest document data.</p>
+                        </div>
+                    </div>
+                    <button onclick="window.navigateToSection('roadmap')" class="bg-[#0D9488] hover:bg-[#0F766E] text-white px-4 py-2 rounded-lg font-label-md text-xs font-bold shrink-0 flex items-center gap-1.5 shadow-sm transition-colors">
+                        <span>View Updated Roadmap</span>
+                        <span class="material-symbols-outlined text-[16px]">trending_flat</span>
+                    </button>
                 </div>
                 
                 <!-- Bento Grid Layout -->
@@ -221,23 +247,23 @@
                                 <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">upload_file</span>
                             </div>
                             <h2 class="font-headline-md text-lg md:text-xl text-primary-container mb-2 z-10 font-bold">Secure Document Upload</h2>
-                            <p class="font-body-md text-sm text-on-surface-variant mb-6 max-w-md z-10">Drag and drop your Termination Letters, Severance Packages, or Tax Forms (W-2/1099) here.</p>
+                            <p class="font-body-md text-sm text-on-surface-variant mb-6 max-w-md z-10">Drag and drop your Termination Letters, Severance Packages, or Tax Forms (W-2 / 1099-NEC) here.</p>
                             
                             <div class="flex flex-col sm:flex-row gap-4 w-full justify-center z-10">
                                 <input type="file" id="file-input" class="hidden" multiple accept=".pdf,.png,.jpg,.jpeg,.txt"/>
                                 <button id="select-files-btn" class="bg-[#0D9488] text-white px-6 py-3 rounded-lg font-label-md font-bold hover:bg-[#0F766E] transition-colors min-h-[48px] shadow-sm">
                                     Select Files
                                 </button>
-                                <button onclick="openVault()" class="border border-outline-variant bg-transparent text-primary-container px-6 py-3 rounded-lg font-label-md font-bold hover:bg-surface-variant transition-colors min-h-[48px]">
-                                    Browse Vault
+                                <button onclick="openVault()" class="border border-outline-variant bg-white text-primary-container px-6 py-3 rounded-lg font-label-md font-bold hover:bg-surface-variant transition-colors min-h-[48px]">
+                                    Browse Sample Vault (5)
                                 </button>
                             </div>
                             <p class="font-label-sm text-xs text-outline mt-4 z-10 flex items-center justify-center gap-1">
                                 <span class="material-symbols-outlined text-[14px]">lock</span>
-                                End-to-end encrypted. Max file size 50MB. PDF, JPG, PNG, TXT.
+                                100% Client-Side Processing. Zero server uploads. PDF, TXT, PNG, JPG.
                             </p>
                             <button onclick="loadSampleDocuments()" class="text-secondary hover:text-[#0f766e] font-bold text-xs mt-3 z-10 hover:underline">
-                                Or click here to load sample transition documents (Florida)
+                                Or click here to load Florida sample package (Severance + W-2)
                             </button>
                             <!-- Dotted border effect -->
                             <div class="absolute inset-4 border-2 border-dashed border-outline-variant rounded-lg pointer-events-none z-0 group-hover:border-secondary transition-colors duration-300"></div>
@@ -246,8 +272,11 @@
                         <!-- Uploaded Files List -->
                         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
                             <div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
-                                <h3 class="font-headline-sm text-base md:text-lg text-primary-container font-semibold">Uploaded Transition Documents</h3>
-                                <span class="font-label-sm text-xs text-on-surface-variant">Active Files</span>
+                                <div>
+                                    <h3 class="font-headline-sm text-base md:text-lg text-primary-container font-semibold">Uploaded Transition Documents</h3>
+                                    <p class="text-[11px] text-on-surface-variant">Click any document below to inspect its clauses &amp; plain-language translation</p>
+                                </div>
+                                <span id="uploads-count-badge" class="font-label-sm text-xs bg-white px-2.5 py-1 rounded-full border border-outline-variant text-primary font-semibold">0 Files</span>
                             </div>
                             <ul id="uploads-list" class="divide-y divide-outline-variant">
                                 <!-- Populated dynamically by app.js -->
@@ -261,51 +290,63 @@
                         <div class="bg-[#f8f9ff] border border-[#d3e4fe] rounded-xl p-6 shadow-[0px_4px_12px_rgba(30,41,59,0.05)]">
                             <div class="flex items-center gap-2 mb-4 text-[#091426]">
                                 <span class="material-symbols-outlined fill text-secondary" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
-                                <h3 class="font-headline-sm font-semibold text-lg">Why We Need This</h3>
+                                <h3 class="font-headline-sm font-semibold text-lg">What We Scan For</h3>
                             </div>
                             <p class="font-body-sm text-xs md:text-sm text-on-surface-variant mb-4 leading-relaxed">
-                                Your termination documents contain critical clauses that dictate your financial runway, non-compete obligations, and eligibility for state benefits.
+                                Your separation documents contain clauses that directly impact your unemployment start date, cash runway, and legal rights.
                             </p>
-                            <ul class="space-y-3 font-body-sm text-xs md:text-sm text-on-surface">
+                            <ul class="space-y-2.5 font-body-sm text-xs md:text-sm text-on-surface">
                                 <li class="flex items-start gap-2">
-                                    <span class="material-symbols-outlined text-[#0D9488] text-[20px]">check</span>
-                                    <span>Identify hidden "clawback" clauses in severance.</span>
+                                    <span class="material-symbols-outlined text-[#0D9488] text-[18px] mt-0.5">check_circle</span>
+                                    <span><strong>Severance Structure:</strong> Lump-sum vs. salary continuation state offset rules.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="material-symbols-outlined text-[#0D9488] text-[20px]">check</span>
-                                    <span>Calculate exact COBRA healthcare runway.</span>
+                                    <span class="material-symbols-outlined text-[#0D9488] text-[18px] mt-0.5">check_circle</span>
+                                    <span><strong>Restrictive Clauses:</strong> Non-compete, clawback, and non-disparagement terms.</span>
                                 </li>
                                 <li class="flex items-start gap-2">
-                                    <span class="material-symbols-outlined text-[#0D9488] text-[20px]">check</span>
-                                    <span>Determine immediate UI (Unemployment Insurance) eligibility.</span>
+                                    <span class="material-symbols-outlined text-[#0D9488] text-[18px] mt-0.5">check_circle</span>
+                                    <span><strong>Base Period &amp; 1099 Check:</strong> W-2 quarterly eligibility or 1099 misclassification flags.</span>
                                 </li>
                             </ul>
                         </div>
 
-                        <!-- Document Translation Preview -->
+                        <!-- Document Translation & Clause Audit Preview -->
                         <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex-grow flex flex-col">
-                            <div class="flex items-center gap-2 mb-4 text-primary-container">
-                                <span class="material-symbols-outlined text-secondary">translate</span>
-                                <h3 class="font-headline-sm font-semibold text-lg">Plain Language Translation</h3>
+                            <div class="flex items-center justify-between gap-2 mb-3 text-primary-container">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-secondary">translate</span>
+                                    <h3 class="font-headline-sm font-semibold text-lg">Clause &amp; Legalese Audit</h3>
+                                </div>
+                                <span id="translation-doc-badge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-surface-container text-primary">No File Selected</span>
                             </div>
-                            <p class="font-body-sm text-xs text-on-surface-variant mb-4">
-                                Select or upload a document to view its translated plain language summaries.
-                            </p>
-                            <div class="bg-surface-variant/40 rounded p-4 mb-4 relative before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-outline-variant before:rounded-l">
-                                <p id="translation-legalese" class="font-body-sm text-xs text-outline italic line-clamp-3">
-                                    No document currently selected. Select a verified document from the list or upload one to translate.
+
+                            <!-- Detected Clauses Pills -->
+                            <div id="translation-clauses-badges" class="flex flex-wrap gap-1.5 mb-3">
+                                <span class="text-[11px] px-2 py-0.5 rounded bg-surface-container-low text-outline border border-outline-variant/50">Upload or select a file to scan clauses</span>
+                            </div>
+
+                            <div class="bg-surface-variant/40 rounded p-3.5 mb-3 relative before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-outline-variant before:rounded-l">
+                                <p class="text-[10px] uppercase tracking-wider font-bold text-outline mb-1">Extracted Document Excerpt</p>
+                                <p id="translation-legalese" class="font-body-sm text-xs text-on-surface-variant italic line-clamp-4">
+                                    No document currently selected. Upload a PDF/TXT document or choose one from the Sample Vault to inspect its clauses.
                                 </p>
                             </div>
-                            <div class="flex justify-center mb-4 text-outline">
-                                <span class="material-symbols-outlined">arrow_downward</span>
+                            <div class="flex justify-center mb-3 text-outline">
+                                <span class="material-symbols-outlined text-[20px]">arrow_downward</span>
                             </div>
-                            <div class="bg-[#eff4ff] border border-[#dce9ff] rounded p-4 relative before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#0D9488] before:rounded-l flex-grow">
-                                <h4 id="translation-title" class="font-label-md text-sm text-[#091426] mb-1 font-bold flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[16px] text-secondary">gavel</span> Translation Draft
-                                </h4>
-                                <p id="translation-plain-english" class="font-body-sm text-xs text-on-surface-variant leading-relaxed">
-                                    Legal definitions will appear here in plain, jargon-free language.
-                                </p>
+                            <div class="bg-[#eff4ff] border border-[#dce9ff] rounded p-4 relative before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-[#0D9488] before:rounded-l flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h4 id="translation-title" class="font-label-md text-sm text-[#091426] mb-1.5 font-bold flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px] text-secondary">gavel</span> Plain-English Impact
+                                    </h4>
+                                    <div id="translation-plain-english" class="font-body-sm text-xs text-on-surface-variant leading-relaxed space-y-2">
+                                        Legal translations and state-specific unemployment impact will appear here in plain, jargon-free language.
+                                    </div>
+                                </div>
+                                <div id="translation-action-slot" class="mt-3 pt-2 border-t border-[#cbdbf5] hidden">
+                                    <!-- Dynamic contextual action button -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -321,23 +362,32 @@
                 <header class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary font-bold">Financial Roadmap Dashboard</h2>
-                        <p class="font-body-lg text-sm md:text-base text-on-surface-variant">Navigate your transition timeline and benefit eligibility with clarity.</p>
+                        <p class="font-body-lg text-sm md:text-base text-on-surface-variant">Navigate your state unemployment eligibility, severance offset clock, and total cash runway.</p>
                     </div>
-                    <div class="flex items-center gap-2 bg-surface-container-high px-4 py-2 rounded-full border border-outline-variant w-fit">
-                        <span class="material-symbols-outlined text-secondary">location_on</span>
-                        <span id="state-badge-indicator" class="font-label-md text-sm text-primary font-semibold">Florida</span>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="flex items-center gap-2 bg-surface-container-high px-4 py-2 rounded-full border border-outline-variant">
+                            <span class="material-symbols-outlined text-secondary text-[18px]">location_on</span>
+                            <span id="state-badge-indicator" class="font-label-md text-sm text-primary font-semibold">Florida</span>
+                        </div>
+                        <a id="state-portal-link" href="https://www.floridajobs.org/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 bg-secondary text-white hover:bg-[#0F766E] px-4 py-2 rounded-full font-label-md text-xs font-bold transition-colors shadow-sm">
+                            <span>Official State UI Portal</span>
+                            <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+                        </a>
                     </div>
                 </header>
 
                 <!-- Interactive Parameters Editor -->
                 <section class="glass-card bg-surface-container-low border border-outline-variant p-6 rounded-xl mb-6">
-                    <h3 class="font-headline-sm text-base md:text-lg text-primary mb-4 flex items-center gap-2 font-bold">
-                        <span class="material-symbols-outlined text-secondary">tune</span>
-                        Adjust Transition Parameters
-                    </h3>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <h3 class="font-headline-sm text-base md:text-lg text-primary flex items-center gap-2 font-bold">
+                            <span class="material-symbols-outlined text-secondary">tune</span>
+                            Adjust Transition Parameters
+                        </h3>
+                        <span class="text-xs text-on-surface-variant">Changes recalculate your eligibility &amp; runway in real time</span>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">State of Separation</label>
+                            <label for="roadmap-state" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">State of Separation</label>
                             <select id="roadmap-state" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary">
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
@@ -347,6 +397,7 @@
                                 <option value="CO">Colorado</option>
                                 <option value="CT">Connecticut</option>
                                 <option value="DE">Delaware</option>
+                                <option value="DC">District of Columbia</option>
                                 <option value="FL">Florida</option>
                                 <option value="GA">Georgia</option>
                                 <option value="HI">Hawaii</option>
@@ -392,23 +443,26 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Separation Date</label>
+                            <label for="roadmap-sep-date" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Separation Date</label>
                             <input type="date" id="roadmap-sep-date" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary"/>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Prior Weekly Wage ($)</label>
-                            <input type="number" id="roadmap-weekly-wage" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary" min="1"/>
+                            <label for="roadmap-weekly-wage" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Prior Weekly Wage ($)</label>
+                            <input type="number" id="roadmap-weekly-wage" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary" min="100" step="50"/>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Severance Package</label>
+                            <label for="roadmap-sev-type" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Severance Package</label>
                             <div class="flex gap-2">
                                 <select id="roadmap-sev-type" class="w-1/2 bg-white border border-outline-variant rounded-lg p-2 text-xs text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary">
-                                    <option value="weeks">Weeks Paid</option>
+                                    <option value="weeks">Continuation (Wks)</option>
                                     <option value="lump-sum">Lump Sum ($)</option>
                                     <option value="none">No Severance</option>
                                 </select>
-                                <input type="number" id="roadmap-sev-weeks" class="w-1/2 bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary" placeholder="Weeks"/>
-                                <input type="number" id="roadmap-sev-amount" class="w-1/2 bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary hidden" placeholder="Amount ($)"/>
+                                <input type="number" id="roadmap-sev-weeks" class="w-1/2 bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary" min="0" max="104" placeholder="Weeks" title="Weeks of Severance"/>
+                                <input type="number" id="roadmap-sev-amount" class="w-1/2 bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-medium focus:border-secondary focus:ring-1 focus:ring-secondary hidden" min="0" step="500" placeholder="Amount ($)" title="Total Severance Lump Sum ($)"/>
+                                <div id="roadmap-sev-none-badge" class="w-1/2 bg-surface-container border border-outline-variant/60 rounded-lg p-2 text-xs text-outline font-semibold hidden items-center justify-center">
+                                    $0 / 0 Wks
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -416,48 +470,57 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-md">
                     <!-- Severance Clock - Hero Widget -->
-                    <section class="lg:col-span-8 bg-[#091426] text-white border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6 md:p-8 flex flex-col justify-center relative overflow-hidden">
+                    <section class="lg:col-span-8 bg-[#091426] text-white border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6 md:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 50% -20%, #86f2e4 0%, transparent 70%);"></div>
                         <div class="relative z-10">
-                            <div class="flex items-center gap-2 mb-6 text-inverse-primary font-label-md text-sm font-semibold">
-                                <span class="material-symbols-outlined">timer</span>
-                                <h2>Severance Exhaustion Clock</h2>
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+                                <div class="flex items-center gap-2 text-inverse-primary font-label-md text-sm font-semibold">
+                                    <span class="material-symbols-outlined">timer</span>
+                                    <h2>Severance Exhaustion &amp; Filing Clock</h2>
+                                </div>
+                                <span id="clock-waiting-week-badge" class="text-[11px] bg-white/10 border border-white/20 px-2.5 py-1 rounded-full text-primary-fixed">
+                                    Includes 1-Wk State Waiting Period
+                                </span>
                             </div>
                             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                                 <div>
-                                    <p class="font-body-md text-sm text-primary-fixed-dim mb-1">Unemployment Eligibility Date</p>
-                                    <h3 id="clock-date" class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-2">Oct 14, 2026</h3>
-                                    <div class="flex gap-4">
-                                        <div class="text-center">
-                                            <span id="clock-days" class="block text-3xl font-semibold text-secondary-fixed">42</span>
-                                            <span class="font-label-sm text-xs text-tertiary-fixed-dim uppercase tracking-wider">Days Delay</span>
+                                    <p class="font-body-md text-xs uppercase tracking-wider text-primary-fixed-dim mb-1">First Eligible UI Filing Date</p>
+                                    <h3 id="clock-date" class="text-3xl md:text-5xl font-bold tracking-tight text-white mb-3">Oct 14, 2026</h3>
+                                    <div class="flex flex-wrap gap-6">
+                                        <div>
+                                            <span id="clock-days" class="block text-2xl md:text-3xl font-semibold text-secondary-fixed">42</span>
+                                            <span class="font-label-sm text-[11px] text-tertiary-fixed-dim uppercase tracking-wider">Days Offset</span>
                                         </div>
-                                        <div class="text-center">
-                                            <span id="clock-weeks" class="block text-3xl font-semibold text-secondary-fixed">6</span>
-                                            <span class="font-label-sm text-xs text-tertiary-fixed-dim uppercase tracking-wider">Weeks</span>
+                                        <div>
+                                            <span id="clock-weeks" class="block text-2xl md:text-3xl font-semibold text-secondary-fixed">6</span>
+                                            <span class="font-label-sm text-[11px] text-tertiary-fixed-dim uppercase tracking-wider">Weeks Covered</span>
+                                        </div>
+                                        <div class="border-l border-white/15 pl-6">
+                                            <span id="clock-first-payout" class="block text-xl md:text-2xl font-semibold text-white">Oct 28, 2026</span>
+                                            <span class="font-label-sm text-[11px] text-tertiary-fixed-dim uppercase tracking-wider">Est. First Check</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="clock-status-card" class="bg-white/10 rounded-lg p-4 backdrop-blur-sm border border-white/20 text-right w-full md:w-auto">
-                                    <p class="font-label-sm text-xs text-primary-fixed-dim uppercase mb-1">Current Status</p>
-                                    <p id="clock-status-text" class="font-headline-sm text-lg text-secondary-fixed flex items-center justify-end gap-2 text-[#86f2e4]">
+                                <div id="clock-status-card" class="bg-white/10 rounded-lg p-4 backdrop-blur-sm border border-white/20 text-left md:text-right w-full md:w-auto shrink-0">
+                                    <p class="font-label-sm text-xs text-primary-fixed-dim uppercase mb-1">State Rule Impact</p>
+                                    <p id="clock-status-text" class="font-headline-sm text-base md:text-lg text-secondary-fixed flex items-center md:justify-end gap-2 text-[#86f2e4]">
                                         <span class="material-symbols-outlined">shield</span>
-                                        Severance Offset Active
+                                        Severance Delay Active
                                     </p>
                                 </div>
                             </div>
                             <div class="mt-8">
                                 <div id="clock-date-labels" class="flex justify-between font-label-sm text-xs text-primary-fixed-dim mb-2">
-                                    <span>Separation Date (Aug 15)</span>
-                                    <span>Eligibility Date (Oct 14)</span>
+                                    <span>Separation Date</span>
+                                    <span>Filing Eligibility</span>
                                 </div>
-                                <div class="h-2 w-full bg-white/20 rounded-full overflow-hidden">
+                                <div class="h-2.5 w-full bg-white/20 rounded-full overflow-hidden">
                                     <div id="clock-progress" class="h-full bg-secondary-fixed w-[30%] rounded-full relative transition-all duration-500">
                                         <div class="absolute right-0 top-0 bottom-0 w-2 bg-white rounded-full"></div>
                                     </div>
                                 </div>
                             </div>
-                            <p id="clock-description" class="mt-4 text-xs text-primary-fixed-dim bg-white/5 p-3 rounded border border-white/10 leading-relaxed">
+                            <p id="clock-description" class="mt-4 text-xs text-primary-fixed-dim bg-white/5 p-3.5 rounded-lg border border-white/10 leading-relaxed">
                                 Under Florida law, severance package payments delay benefits for the duration of the severance period.
                             </p>
                         </div>
@@ -465,58 +528,152 @@
 
                     <!-- Base Period Validator -->
                     <section class="lg:col-span-4 glass-card flex flex-col">
-                        <div class="flex items-center gap-2 mb-4 text-primary font-headline-sm text-base md:text-lg border-b border-outline-variant pb-2 font-bold">
-                            <span class="material-symbols-outlined text-secondary">fact_check</span>
-                            <h2>Base Period Validator</h2>
+                        <div class="flex items-center justify-between gap-2 mb-4 text-primary font-headline-sm text-base md:text-lg border-b border-outline-variant pb-2 font-bold">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-secondary">fact_check</span>
+                                <h2>Base Period Validator</h2>
+                            </div>
+                            <button id="bp-1099-toggle-btn" onclick="toggle1099Mode()" class="text-[10px] font-bold px-2 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors" title="Toggle between W-2 Employee and 1099 Contractor earnings check">
+                                Mode: W-2
+                            </button>
                         </div>
                         <div class="flex-grow flex flex-col justify-between">
-                            <div id="bp-status-box" class="flex items-start gap-4 mb-6 p-4 rounded-lg bg-[#eff4ff]">
-                                <span id="bp-status-icon" class="material-symbols-outlined text-[#006a61] text-3xl mt-1" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                <div>
+                            <div id="bp-status-box" class="flex items-start gap-3 mb-4 p-3.5 rounded-lg bg-[#eff4ff]">
+                                <span id="bp-status-icon" class="material-symbols-outlined text-[#006a61] text-2xl mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                <div class="flex-1">
                                     <h3 id="bp-status-title" class="font-label-md text-sm text-primary mb-1 font-semibold">Quarters Qualified</h3>
                                     <p id="bp-status-desc" class="font-body-sm text-xs text-on-surface-variant leading-relaxed">Sufficient wages earned in 4 of 4 required base period quarters.</p>
+                                    <div id="bp-action-container" class="mt-2 hidden">
+                                        <!-- Dynamic dispute shortcut when unqualified or 1099 -->
+                                    </div>
                                 </div>
                             </div>
                             
-                            <!-- Financial Details -->
-                            <div class="space-y-3">
-                                <div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
-                                    <span class="font-body-sm text-xs text-on-surface-variant">Q1 Wages</span>
-                                    <span id="bp-q1" class="font-label-md text-sm text-primary font-semibold">$18,500</span>
+                            <!-- Financial Details (All 4 Quarters + High Quarter + Total) -->
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between items-center py-1.5 border-b border-outline-variant/40">
+                                    <span class="text-on-surface-variant">Q1 / Q2 Wages</span>
+                                    <span class="font-semibold text-primary"><span id="bp-q1">$18,500</span> / <span id="bp-q2">$18,500</span></span>
                                 </div>
-                                <div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
-                                    <span class="font-body-sm text-xs text-on-surface-variant">Q2 Wages</span>
-                                    <span id="bp-q2" class="font-label-md text-sm text-primary font-semibold">$18,500</span>
+                                <div class="flex justify-between items-center py-1.5 border-b border-outline-variant/40">
+                                    <span class="text-on-surface-variant">Q3 / Q4 Wages</span>
+                                    <span class="font-semibold text-primary"><span id="bp-q3">$19,200</span> / <span id="bp-q4">$19,200</span></span>
                                 </div>
-                                <div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
-                                    <span class="font-body-sm text-xs text-on-surface-variant">Q3 Wages</span>
-                                    <span id="bp-q3" class="font-label-md text-sm text-primary font-semibold">$19,200</span>
+                                <div class="flex justify-between items-center py-1.5 border-b border-outline-variant/40">
+                                    <span class="text-on-surface-variant font-medium">High Quarter</span>
+                                    <span id="bp-high" class="font-bold text-secondary">$19,200</span>
                                 </div>
-                                <div class="flex justify-between items-center py-2">
-                                    <span class="font-body-sm text-xs text-on-surface-variant font-medium">High Quarter</span>
-                                    <span id="bp-high" class="font-label-md text-sm text-secondary font-bold">$19,200</span>
+                                <div class="flex justify-between items-center py-1.5">
+                                    <span class="text-on-surface-variant font-medium">Total Base Period Wages</span>
+                                    <span id="bp-total" class="font-bold text-primary">$75,400</span>
                                 </div>
                             </div>
 
                             <!-- Interactive Base Wage Inputs -->
-                            <div class="mt-4 p-4 border border-outline-variant/50 rounded-lg bg-surface-bright">
-                                <h4 class="font-label-md text-primary mb-2 text-xs uppercase tracking-wider text-on-surface-variant font-bold">Wages Per Quarter</h4>
+                            <div class="mt-4 p-3.5 border border-outline-variant/50 rounded-lg bg-surface-bright">
+                                <h4 class="font-label-md text-primary mb-2 text-[11px] uppercase tracking-wider text-on-surface-variant font-bold">Edit Quarterly Wages ($)</h4>
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
-                                        <label class="block text-[10px] text-outline font-semibold">Q1 Wages ($)</label>
-                                        <input type="number" id="roadmap-q1" class="w-full bg-white border border-outline-variant rounded p-1 text-xs text-primary focus:border-secondary"/>
+                                        <label for="roadmap-q1" class="block text-[10px] text-outline font-semibold">Q1 Wages ($)</label>
+                                        <input type="number" id="roadmap-q1" min="0" step="500" class="w-full bg-white border border-outline-variant rounded p-1.5 text-xs text-primary focus:border-secondary"/>
                                     </div>
                                     <div>
-                                        <label class="block text-[10px] text-outline font-semibold">Q2 Wages ($)</label>
-                                        <input type="number" id="roadmap-q2" class="w-full bg-white border border-outline-variant rounded p-1 text-xs text-primary focus:border-secondary"/>
+                                        <label for="roadmap-q2" class="block text-[10px] text-outline font-semibold">Q2 Wages ($)</label>
+                                        <input type="number" id="roadmap-q2" min="0" step="500" class="w-full bg-white border border-outline-variant rounded p-1.5 text-xs text-primary focus:border-secondary"/>
                                     </div>
                                     <div>
-                                        <label class="block text-[10px] text-outline font-semibold">Q3 Wages ($)</label>
-                                        <input type="number" id="roadmap-q3" class="w-full bg-white border border-outline-variant rounded p-1 text-xs text-primary focus:border-secondary"/>
+                                        <label for="roadmap-q3" class="block text-[10px] text-outline font-semibold">Q3 Wages ($)</label>
+                                        <input type="number" id="roadmap-q3" min="0" step="500" class="w-full bg-white border border-outline-variant rounded p-1.5 text-xs text-primary focus:border-secondary"/>
                                     </div>
                                     <div>
-                                        <label class="block text-[10px] text-outline font-semibold">Q4 Wages ($)</label>
-                                        <input type="number" id="roadmap-q4" class="w-full bg-white border border-outline-variant rounded p-1 text-xs text-primary focus:border-secondary"/>
+                                        <label for="roadmap-q4" class="block text-[10px] text-outline font-semibold">Q4 Wages ($)</label>
+                                        <input type="number" id="roadmap-q4" min="0" step="500" class="w-full bg-white border border-outline-variant rounded p-1.5 text-xs text-primary focus:border-secondary"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- NEW: Total Financial Runway & COBRA Burn-Rate Calculator (Spans 12 cols) -->
+                    <section class="lg:col-span-12 glass-card border-2 border-[#d3e4fe]">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6 border-b border-outline-variant pb-3">
+                            <div class="flex items-center gap-2 text-primary font-headline-sm text-base md:text-lg font-bold">
+                                <span class="material-symbols-outlined text-secondary">savings</span>
+                                <h2>Total Financial Runway &amp; COBRA Cash-Flow Simulator</h2>
+                            </div>
+                            <label class="flex items-center gap-2 text-xs text-on-surface-variant font-medium cursor-pointer select-none">
+                                <input type="checkbox" id="runway-tax-toggle" checked class="rounded text-secondary border-outline-variant focus:ring-secondary"/>
+                                <span>Deduct Estimated Taxes (~22% Severance / 10% UI Withholding)</span>
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                            <!-- Left: Inputs (5 cols) -->
+                            <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3.5 bg-surface-container-low p-4 rounded-xl border border-outline-variant/60">
+                                <div>
+                                    <label for="runway-savings" class="block text-[11px] font-bold uppercase tracking-wider text-on-surface-variant mb-1">Liquid Savings ($)</label>
+                                    <input type="number" id="runway-savings" min="0" step="1000" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-semibold focus:border-secondary"/>
+                                </div>
+                                <div>
+                                    <label for="runway-expenses" class="block text-[11px] font-bold uppercase tracking-wider text-on-surface-variant mb-1">Monthly Living Burn ($)</label>
+                                    <input type="number" id="runway-expenses" min="500" step="250" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-semibold focus:border-secondary"/>
+                                </div>
+                                <div>
+                                    <label for="runway-cobra" class="block text-[11px] font-bold uppercase tracking-wider text-on-surface-variant mb-1">COBRA Healthcare ($/mo)</label>
+                                    <input type="number" id="runway-cobra" min="0" step="50" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-semibold focus:border-secondary"/>
+                                </div>
+                                <div>
+                                    <label for="runway-cobra-subsidy" class="block text-[11px] font-bold uppercase tracking-wider text-on-surface-variant mb-1">Employer COBRA Subsidy</label>
+                                    <select id="runway-cobra-subsidy" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary font-semibold focus:border-secondary">
+                                        <option value="0">0 Months (Self-Pay)</option>
+                                        <option value="1">1 Month Covered</option>
+                                        <option value="2">2 Months Covered</option>
+                                        <option value="3">3 Months Covered</option>
+                                        <option value="6">6 Months Covered</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Right: Runway Output & Stacked Breakdown (7 cols) -->
+                            <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                    <div class="p-4 rounded-xl bg-[#091426] text-white">
+                                        <span class="block text-[11px] uppercase tracking-wider text-primary-fixed-dim">Projected Runway</span>
+                                        <span id="runway-months" class="text-2xl md:text-3xl font-bold text-[#86f2e4]">6.4 Mos</span>
+                                        <span id="runway-weeks" class="block text-xs text-primary-fixed-dim mt-0.5">28 Weeks Total</span>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+                                        <span class="block text-[11px] uppercase tracking-wider text-on-surface-variant">Cash Depletion Date</span>
+                                        <span id="runway-depletion-date" class="text-xl md:text-2xl font-bold text-primary">Dec 28, 2026</span>
+                                        <span id="runway-burn-label" class="block text-xs text-on-surface-variant mt-0.5">$4,850/mo full burn</span>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+                                        <span class="block text-[11px] uppercase tracking-wider text-on-surface-variant">Total Net Resources</span>
+                                        <span id="runway-total-pool" class="text-xl md:text-2xl font-bold text-secondary">$27,330</span>
+                                        <span class="block text-xs text-on-surface-variant mt-0.5">Savings + Sev + UI</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stacked Resource Bar -->
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold mb-1.5">
+                                        <span class="text-primary flex items-center gap-1.5">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+                                            Savings: <span id="runway-bar-savings-val">$15,000</span>
+                                        </span>
+                                        <span class="text-secondary flex items-center gap-1.5">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-[#0D9488] inline-block"></span>
+                                            Net Severance: <span id="runway-bar-sev-val">$9,360</span>
+                                        </span>
+                                        <span class="text-[#3c475a] flex items-center gap-1.5">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-[#6bd8cb] inline-block"></span>
+                                            Net Total UI: <span id="runway-bar-ui-val">$2,970</span>
+                                        </span>
+                                    </div>
+                                    <div class="h-3.5 w-full bg-surface-container rounded-full overflow-hidden flex">
+                                        <div id="runway-seg-savings" class="h-full bg-primary transition-all duration-500" style="width: 55%;" title="Liquid Savings"></div>
+                                        <div id="runway-seg-sev" class="h-full bg-[#0D9488] transition-all duration-500" style="width: 34%;" title="Net Severance"></div>
+                                        <div id="runway-seg-ui" class="h-full bg-[#6bd8cb] transition-all duration-500" style="width: 11%;" title="Net Unemployment Benefits"></div>
                                     </div>
                                 </div>
                             </div>
@@ -524,41 +681,49 @@
                     </section>
 
                     <!-- State-Adjusted Benefit Estimator -->
-                    <section class="lg:col-span-6 glass-card">
-                        <div class="flex items-center justify-between mb-6 border-b border-outline-variant pb-2">
-                            <div class="flex items-center gap-2 text-primary font-headline-sm text-base md:text-lg font-bold">
-                                <span class="material-symbols-outlined text-secondary">account_balance</span>
-                                <h2>Benefit Estimator</h2>
-                            </div>
-                        </div>
-                        <div class="flex flex-col md:flex-row gap-6 items-center">
-                            <div class="w-full md:w-1/2 p-6 rounded-xl border border-[#CBD5E1] bg-surface-bright text-center relative overflow-hidden">
-                                <div id="cap-flag" class="absolute top-0 right-0 p-2 text-[#ba1a1a] bg-[#ffdad6] rounded-bl-lg font-label-sm text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 hidden">
-                                    <span class="material-symbols-outlined text-[12px]">warning</span>
-                                    State Cap
+                    <section class="lg:col-span-6 glass-card flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-6 border-b border-outline-variant pb-2">
+                                <div class="flex items-center gap-2 text-primary font-headline-sm text-base md:text-lg font-bold">
+                                    <span class="material-symbols-outlined text-secondary">account_balance</span>
+                                    <h2>State Benefit Estimator</h2>
                                 </div>
-                                <p class="font-body-md text-xs text-on-surface-variant mb-2">Estimated Weekly Benefit</p>
-                                <p id="est-wba" class="text-3xl md:text-4xl font-bold text-primary mb-1">$275<span class="text-base text-on-surface-variant font-normal">/wk</span></p>
-                                <p class="font-label-sm text-xs text-outline">State Weekly Benefit Amount</p>
+                                <span id="est-duration-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-surface-container text-primary">
+                                    Max 12 Weeks
+                                </span>
                             </div>
-                            <div class="w-full md:w-1/2 space-y-4">
-                                <div>
-                                    <div class="flex justify-between font-body-sm text-xs mb-1">
-                                        <span class="text-on-surface-variant">Calculated WBA (Formula)</span>
-                                        <span id="est-calc-wba" class="text-primary font-medium">$738/wk</span>
+                            <div class="flex flex-col md:flex-row gap-6 items-center">
+                                <div class="w-full md:w-1/2 p-6 rounded-xl border border-[#CBD5E1] bg-surface-bright text-center relative overflow-hidden">
+                                    <div id="cap-flag" class="absolute top-0 right-0 p-2 text-[#ba1a1a] bg-[#ffdad6] rounded-bl-lg font-label-sm text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 hidden">
+                                        <span class="material-symbols-outlined text-[12px]">warning</span>
+                                        State Cap
                                     </div>
-                                    <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
-                                        <div id="est-bar-calc" class="h-full bg-outline-variant w-full rounded-full relative transition-all duration-500"></div>
-                                    </div>
+                                    <p class="font-body-md text-xs text-on-surface-variant mb-2">Estimated Weekly Benefit</p>
+                                    <p id="est-wba" class="text-3xl md:text-4xl font-bold text-primary mb-1">$275<span class="text-base text-on-surface-variant font-normal">/wk</span></p>
+                                    <p id="est-max-payout-sub" class="font-label-sm text-xs text-secondary font-semibold">Up to $3,300 total payout</p>
                                 </div>
-                                <div>
-                                    <div class="flex justify-between font-body-sm text-xs mb-1">
-                                        <span class="text-on-surface-variant font-medium text-primary">Actual Eligible (Capped)</span>
-                                        <span id="est-actual-text" class="text-secondary font-medium">$275/wk</span>
+                                <div class="w-full md:w-1/2 space-y-4">
+                                    <div>
+                                        <div class="flex justify-between font-body-sm text-xs mb-1">
+                                            <span class="text-on-surface-variant">Uncapped Formula WBA</span>
+                                            <span id="est-calc-wba" class="text-primary font-medium">$738/wk</span>
+                                        </div>
+                                        <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+                                            <div id="est-bar-calc" class="h-full bg-outline-variant w-full rounded-full relative transition-all duration-500"></div>
+                                        </div>
                                     </div>
-                                    <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
-                                        <div id="est-bar-eligible" class="h-full bg-secondary w-[37%] rounded-full relative transition-all duration-500"></div>
+                                    <div>
+                                        <div class="flex justify-between font-body-sm text-xs mb-1">
+                                            <span class="text-on-surface-variant font-medium text-primary">Actual Eligible (Capped)</span>
+                                            <span id="est-actual-text" class="text-secondary font-bold">$275/wk</span>
+                                        </div>
+                                        <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+                                            <div id="est-bar-eligible" class="h-full bg-secondary w-[37%] rounded-full relative transition-all duration-500"></div>
+                                        </div>
                                     </div>
+                                    <p id="est-formula-text" class="text-[11px] text-outline italic">
+                                        Formula: 1/26 of high quarter wages, capped at $275/week.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -569,24 +734,18 @@
                     </section>
 
                     <!-- Document Readiness Checklist -->
-                    <section class="lg:col-span-6 glass-card">
-                        <div class="flex items-center gap-2 mb-6 text-primary font-headline-sm text-base md:text-lg border-b border-outline-variant pb-2 font-bold">
-                            <span class="material-symbols-outlined text-secondary">folder_special</span>
-                            <h2>Filing Readiness Checklist</h2>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between p-3 bg-white border border-outline-variant/50 rounded-lg">
-                                <div class="flex items-center gap-3">
-                                    <span class="material-symbols-outlined text-[#006a61]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                                    <span class="font-body-md text-primary">State ID / Driver's License</span>
+                    <section class="lg:col-span-6 glass-card flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4 text-primary font-headline-sm text-base md:text-lg border-b border-outline-variant pb-2 font-bold">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-secondary">folder_special</span>
+                                    <h2>Filing Readiness Checklist</h2>
                                 </div>
-                                <span class="font-label-sm text-xs px-2 py-1 bg-[#dce9ff] text-[#006a61] rounded font-semibold">Verified</span>
+                                <span id="checklist-progress-badge" class="text-xs font-semibold text-secondary">1 / 4 Ready</span>
                             </div>
-                            <div id="chk-severance-agreement" class="flex items-center justify-between p-3 bg-white border border-outline-variant/50 rounded-lg">
-                                <!-- Dynamic check status -->
-                            </div>
-                            <div id="chk-w2" class="flex items-center justify-between p-3 bg-white border border-outline-variant/50 rounded-lg">
-                                <!-- Dynamic check status -->
+                            <p class="text-xs text-on-surface-variant mb-3">Check off items as you gather them, or upload your documents in Intake to verify automatically.</p>
+                            <div id="filing-checklist-container" class="space-y-2.5">
+                                <!-- Populated dynamically by app.js -->
                             </div>
                         </div>
                     </section>
@@ -600,7 +759,7 @@
                 <!-- Header Section -->
                 <div class="mb-gutter-md">
                     <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2 font-bold">Advocacy &amp; Action Center</h1>
-                    <p class="font-body-md text-sm md:text-base text-on-surface-variant max-w-2xl">Take decisive action on your employment classification and manage active disputes with our structured tools designed for clarity and security.</p>
+                    <p class="font-body-md text-sm md:text-base text-on-surface-variant max-w-2xl">Contest wrongful "for cause" classifications, diagnose 1099 contractor misclassification, and appeal inaccurate base period wage determinations.</p>
                 </div>
                 
                 <!-- Bento Grid Layout -->
@@ -608,60 +767,79 @@
                     
                     <!-- Active Disputes Tracker (Span full) -->
                     <div class="lg:col-span-12 bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col relative overflow-hidden group shadow-sm">
-                        <!-- Decorative background element -->
                         <div class="absolute -right-10 -top-10 w-40 h-40 bg-surface-container rounded-full opacity-50 pointer-events-none transition-transform group-hover:scale-110 duration-500"></div>
-                        <div class="flex items-center gap-3 mb-4 pb-3 border-b border-surface-container z-10">
-                            <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined fill text-[18px]">pending_actions</span>
+                        <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-surface-container z-10">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined fill text-[18px]">pending_actions</span>
+                                </div>
+                                <h2 class="font-headline-sm text-base md:text-lg text-primary font-semibold">Active Disputes Tracker</h2>
                             </div>
-                            <h2 class="font-headline-sm text-base md:text-lg text-primary font-semibold">Active Disputes Tracker</h2>
+                            <span id="disputes-count-badge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-surface-container text-primary">1 Active Case</span>
                         </div>
                         
                         <!-- Status List -->
-                        <div id="disputes-list" class="space-y-4 z-10">
+                        <div id="disputes-list" class="space-y-3 z-10">
                             <!-- Populated dynamically by app.js -->
                         </div>
                     </div>
 
-                    <!-- Dispute Generators grid -->
-                    <!-- Misclassification of Layoff (Cause vs. Restructuring) -->
-                    <div class="lg:col-span-6 glass-card flex flex-col justify-between">
+                    <!-- Dispute Generators Grid (3 Cards) -->
+                    <!-- 1. Misclassification of Layoff (Cause vs. Restructuring) -->
+                    <div class="lg:col-span-4 glass-card flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center gap-2 mb-4 text-primary font-headline-sm text-base md:text-lg font-bold border-b border-outline-variant pb-2">
+                            <div class="flex items-center gap-2 mb-3 text-primary font-headline-sm text-base font-bold border-b border-outline-variant pb-2">
                                 <span class="material-symbols-outlined text-secondary">gavel</span>
-                                <h3>Cause Dispute Generator</h3>
+                                <h3>Restructuring vs. "Cause"</h3>
                             </div>
-                            <p class="font-body-sm text-xs md:text-sm text-on-surface-variant leading-relaxed mb-4">
-                                If your company restructured your division but classified your separation as a "for cause" termination to avoid paying unemployment, you can generate a formal dispute letter citing company restructuring and local labor protections.
+                            <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed mb-4">
+                                If your company eliminated your role or restructured your division but labeled your termination as "for cause" or "performance" to contest UI claims, generate a formal burden-of-proof appeal.
                             </p>
                         </div>
-                        <button onclick="startDisputeRestructuring()" class="w-full bg-secondary hover:bg-on-secondary-fixed text-on-secondary font-label-md text-sm font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[48px] mt-4">
-                            <span class="material-symbols-outlined text-[20px]">feed</span>
-                            Generate Restructuring Dispute
+                        <button onclick="startDisputeRestructuring()" class="w-full bg-secondary hover:bg-[#0F766E] text-on-secondary font-label-md text-xs font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[44px] mt-2">
+                            <span class="material-symbols-outlined text-[18px]">feed</span>
+                            Draft Restructuring Appeal
                         </button>
                     </div>
 
-                    <!-- 1099 Reality Check Diagnostics -->
-                    <div class="lg:col-span-6 glass-card flex flex-col justify-between">
+                    <!-- 2. 1099 Reality Check Diagnostics -->
+                    <div class="lg:col-span-4 glass-card flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center gap-2 mb-4 text-primary font-headline-sm text-base md:text-lg font-bold border-b border-outline-variant pb-2">
+                            <div class="flex items-center gap-2 mb-3 text-primary font-headline-sm text-base font-bold border-b border-outline-variant pb-2">
                                 <span class="material-symbols-outlined text-secondary">assignment_ind</span>
-                                <h3>1099 Reality Check</h3>
+                                <h3>1099 Misclassification</h3>
                             </div>
-                            <p class="font-body-sm text-xs md:text-sm text-on-surface-variant leading-relaxed mb-4">
-                                Freelancers and independent contractors (1099s) are not covered by traditional state UI. However, many workers are misclassified. Use our diagnostic tool to test your worker classification.
+                            <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed mb-4">
+                                Paid on a 1099-NEC, but your employer controlled your schedule, tools, or core workflow? Run the DOL ABC/Common-Law diagnostic test or generate a wage reclassification request.
                             </p>
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4 mt-4">
-                            <button id="reality-check-btn" class="flex-1 bg-primary text-white hover:bg-primary-container font-label-md text-sm font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm min-h-[48px]">
-                                <span class="material-symbols-outlined text-[20px]">checklist_rtl</span>
-                                Run Diagnostic Quiz
+                        <div class="flex flex-col sm:flex-row gap-2 mt-2">
+                            <button id="reality-check-btn" class="flex-1 bg-primary text-white hover:bg-primary-container font-label-md text-xs font-bold py-3 px-3 rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm min-h-[44px]">
+                                <span class="material-symbols-outlined text-[18px]">checklist_rtl</span>
+                                Diagnostic Quiz
                             </button>
-                            <button onclick="startDispute1099()" class="flex-grow border border-outline-variant bg-transparent text-primary hover:bg-surface-variant font-label-md text-sm font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 min-h-[48px]">
-                                <span class="material-symbols-outlined text-[20px]">feed</span>
-                                Direct Dispute
+                            <button onclick="startDispute1099()" class="flex-1 border border-outline-variant bg-transparent text-primary hover:bg-surface-variant font-label-md text-xs font-bold py-3 px-3 rounded-lg transition-colors flex items-center justify-center gap-1.5 min-h-[44px]">
+                                <span class="material-symbols-outlined text-[18px]">feed</span>
+                                Direct Letter
                             </button>
                         </div>
+                    </div>
+
+                    <!-- 3. Base Period Wage Record Appeal -->
+                    <div class="lg:col-span-4 glass-card flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-3 text-primary font-headline-sm text-base font-bold border-b border-outline-variant pb-2">
+                                <span class="material-symbols-outlined text-secondary">request_quote</span>
+                                <h3>Base Period Wage Appeal</h3>
+                            </div>
+                            <p class="font-body-sm text-xs text-on-surface-variant leading-relaxed mb-4">
+                                Were your quarterly W-2 wages under-reported by your employer, or do you need to request an Alternate Base Period (most recent 4 quarters) to qualify for your state's full WBA?
+                            </p>
+                        </div>
+                        <button onclick="startDisputeWages()" class="w-full bg-surface-container-high hover:bg-surface-variant text-primary border border-outline-variant font-label-md text-xs font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 min-h-[44px] mt-2">
+                            <span class="material-symbols-outlined text-[18px]">edit_document</span>
+                            Draft Wage Correction Appeal
+                        </button>
                     </div>
                 </div>
             </div>
@@ -673,12 +851,16 @@
                 <!-- Header -->
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
                     <div>
+                        <button onclick="window.navigateToSection('advocacy')" class="text-xs font-bold text-secondary hover:underline flex items-center gap-1 mb-2">
+                            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+                            Back to Advocacy Center
+                        </button>
                         <h1 id="editor-title-text" class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary font-bold">Dispute Letter Generated</h1>
-                        <p class="font-body-md text-sm text-on-surface-variant mt-1">Your formal eligibility dispute has been drafted based on your transition data.</p>
+                        <p class="font-body-md text-sm text-on-surface-variant mt-1">Customize claimant and employer details on the right, or edit the document directly below.</p>
                     </div>
                     <div class="flex items-center gap-2 bg-surface-container-high px-3 py-1.5 rounded-full border border-outline-variant w-fit shrink-0">
                         <span class="material-symbols-outlined text-secondary fill text-sm">verified_user</span>
-                        <span class="font-label-sm text-xs text-on-surface font-semibold">Legally Reviewed Template</span>
+                        <span class="font-label-sm text-xs text-on-surface font-semibold">State-Aligned Template</span>
                     </div>
                 </div>
 
@@ -686,14 +868,14 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-md flex-grow items-stretch">
                     <!-- Left: Letter Preview (Spans 8 cols) -->
                     <div class="lg:col-span-8 flex flex-col h-full">
-                        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm flex flex-col h-[650px] overflow-hidden">
+                        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm flex flex-col h-[620px] overflow-hidden">
                             <!-- Toolbar -->
-                            <div class="bg-surface-container-low border-b border-outline-variant px-4 py-3 flex items-center justify-between shrink-0">
+                            <div class="bg-surface-container-low border-b border-outline-variant px-4 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
                                 <span class="font-label-md text-sm text-on-surface-variant flex items-center gap-2 font-semibold">
                                     <span class="material-symbols-outlined text-[18px]">description</span>
                                     Document Preview (Editable)
                                 </span>
-                                <div class="flex gap-2">
+                                <div class="flex flex-wrap gap-2">
                                     <button id="copy-letter-btn" class="bg-white border border-outline-variant hover:bg-surface-variant text-primary px-3 py-1.5 rounded text-xs font-bold flex items-center gap-1">
                                         <span class="material-symbols-outlined text-[16px]">content_copy</span> Copy
                                     </button>
@@ -701,7 +883,7 @@
                                         <span class="material-symbols-outlined text-[16px]">download</span> Download TXT
                                     </button>
                                     <button id="print-letter-btn" class="bg-white border border-outline-variant hover:bg-surface-variant text-primary px-3 py-1.5 rounded text-xs font-bold flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[16px]">print</span> Print
+                                        <span class="material-symbols-outlined text-[16px]">print</span> Print / PDF
                                     </button>
                                 </div>
                             </div>
@@ -717,42 +899,53 @@
                     <div class="lg:col-span-4 flex flex-col gap-gutter-md h-full">
                         <!-- Customizer Input Card -->
                         <div class="glass-card bg-surface-container-low">
-                            <h3 class="font-headline-sm text-base font-bold text-primary mb-4 border-b border-outline-variant pb-2">Customize Details</h3>
-                            <div class="space-y-4">
+                            <h3 class="font-headline-sm text-base font-bold text-primary mb-4 border-b border-outline-variant pb-2">Customize Template Fields</h3>
+                            <div class="space-y-3.5">
                                 <div>
-                                    <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Your Legal Name</label>
+                                    <label for="editor-template-type" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Dispute Template Type</label>
+                                    <select id="editor-template-type" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-xs text-primary font-semibold">
+                                        <option value="cause">Restructuring vs. "For Cause" Appeal</option>
+                                        <option value="1099">1099 Worker Misclassification Audit</option>
+                                        <option value="wages">Base Period Wage Correction Request</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="input-emp-name" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Your Legal Name</label>
                                     <input type="text" id="input-emp-name" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary" value="Jane Doe"/>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Employer / Company Name</label>
+                                    <label for="input-company-name" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Employer / Company Name</label>
                                     <input type="text" id="input-company-name" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary" value="Stitch Tech Systems, Inc."/>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">HR Representative or Manager</label>
+                                    <label for="input-manager-name" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">HR Representative or Manager</label>
                                     <input type="text" id="input-manager-name" class="w-full bg-white border border-outline-variant rounded-lg p-2 text-sm text-primary" value="Director of Human Resources"/>
                                 </div>
-                                <button onclick="generateDispute('cause')" class="w-full bg-surface-variant hover:bg-surface-container-high text-primary font-bold py-2 rounded text-xs border border-outline-variant transition-colors">
-                                    Re-apply Details to Template
+                                <button id="reapply-template-btn" type="button" class="w-full bg-surface-variant hover:bg-surface-container-high text-primary font-bold py-2.5 rounded-lg text-xs border border-outline-variant transition-colors flex items-center justify-center gap-1.5">
+                                    <span class="material-symbols-outlined text-[16px]">refresh</span>
+                                    Re-apply Details to Current Template
                                 </button>
                             </div>
                         </div>
 
                         <!-- Legal Disclaimer & Instructions -->
-                        <div class="glass-card bg-[#fff8f6] border-[#ffdad6] text-on-surface-variant flex-grow">
-                            <div class="flex items-center gap-2 text-[#ba1a1a] font-bold text-sm mb-3">
-                                <span class="material-symbols-outlined text-[20px]">info</span>
-                                <h3>Filing Instructions</h3>
+                        <div class="glass-card bg-[#fff8f6] border-[#ffdad6] text-on-surface-variant flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center gap-2 text-[#ba1a1a] font-bold text-sm mb-3">
+                                    <span class="material-symbols-outlined text-[20px]">info</span>
+                                    <h3>Filing Instructions</h3>
+                                </div>
+                                <p class="font-body-sm text-xs leading-relaxed mb-2.5">
+                                    <strong>1. Proofread:</strong> Verify that your legal name, Claimant ID / SSN, separation dates, and quarterly wage figures match your state records.
+                                </p>
+                                <p class="font-body-sm text-xs leading-relaxed mb-2.5">
+                                    <strong>2. Attach Evidence:</strong> Include copies of your termination notice, severance agreement, W-2s, pay stubs, or 1099-NEC contracts.
+                                </p>
+                                <p class="font-body-sm text-[11px] leading-relaxed text-[#ba1a1a] font-medium border-t border-[#ffdad6] pt-3 mt-3">
+                                    *Disclaimer: UI Runway provides informational templates and estimators for self-advocacy and does not constitute formal legal representation.*
+                                </p>
                             </div>
-                            <p class="font-body-sm text-xs leading-relaxed mb-3">
-                                1. **Proofread**: Ensure your legal name, SSN, dates, and wages match your records exactly.
-                            </p>
-                            <p class="font-body-sm text-xs leading-relaxed mb-3">
-                                2. **Attach Evidence**: When submitting this letter to your state agency or employer, attach supporting evidence like your termination letter, W-2, pay stubs, or W-9 contracts.
-                            </p>
-                            <p class="font-body-sm text-xs leading-relaxed text-[#ba1a1a] font-medium border-t border-[#ffdad6] pt-3 mt-3">
-                                *Disclaimer: This dashboard provides simulated templates and estimators for advocacy purposes only and does not constitute formal legal counsel.*
-                            </p>
-                            <button id="save-letter-btn" class="w-full bg-secondary hover:bg-on-secondary-fixed text-white font-label-md text-sm font-semibold py-3 px-4 rounded-lg mt-4 shadow-sm min-h-[48px] flex items-center justify-center gap-2">
+                            <button id="save-letter-btn" class="w-full bg-secondary hover:bg-[#0F766E] text-white font-label-md text-sm font-semibold py-3 px-4 rounded-lg mt-4 shadow-sm min-h-[48px] flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined">save</span> Save to Active Disputes
                             </button>
                         </div>
@@ -761,26 +954,58 @@
             </div>
         </main>
 
-        <!-- SECTION 5: SETTINGS PLACEHOLDER -->
+        <!-- SECTION 5: SETTINGS & SESSION PREFERENCES -->
         <main id="section-settings" class="flex-grow bg-background overflow-y-auto w-full p-4 md:p-8 hidden">
             <div class="max-w-max-width mx-auto pb-24 md:pb-gutter-md">
                 <header class="mb-gutter-md border-b border-outline-variant pb-4">
                     <h1 class="font-headline-lg text-primary font-bold text-2xl md:text-3xl">System &amp; Session Settings</h1>
-                    <p class="font-body-md text-on-surface-variant mt-1 text-sm md:text-base">Configure your UI Runway experience and secure session preferences.</p>
+                    <p class="font-body-md text-on-surface-variant mt-1 text-sm md:text-base">Manage your profile defaults, local browser persistence, and rules engine diagnostics.</p>
                 </header>
-                <div class="glass-card max-w-xl space-y-6">
-                    <div>
-                        <h3 class="font-headline-sm font-semibold text-lg text-primary mb-2">Secure Storage</h3>
-                        <p class="font-body-sm text-xs text-on-surface-variant mb-4">Your documents are processed strictly in your local browser sandbox. No file data is sent to external servers.</p>
-                        <button onclick="alert('Local database wiped successfully.')" class="bg-error text-white font-bold py-2 px-4 rounded-lg hover:bg-[#93000a] text-xs transition-colors min-h-[40px]">
-                            Clear Local Session Data
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter-md">
+                    <!-- Profile Defaults -->
+                    <div class="glass-card space-y-4">
+                        <div class="flex items-center gap-2 text-primary font-headline-sm font-bold text-lg border-b border-outline-variant pb-2">
+                            <span class="material-symbols-outlined text-secondary">person</span>
+                            <h3>Claimant Profile Defaults</h3>
+                        </div>
+                        <p class="font-body-sm text-xs text-on-surface-variant">Used to pre-fill dispute letters and personalize your dashboard.</p>
+                        <div>
+                            <label for="settings-user-name" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Your Full Name</label>
+                            <input type="text" id="settings-user-name" class="w-full bg-white border border-outline-variant rounded-lg p-2.5 text-sm text-primary" value="Jane Doe"/>
+                        </div>
+                        <div>
+                            <label for="settings-company-name" class="block text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-1">Former Employer Name</label>
+                            <input type="text" id="settings-company-name" class="w-full bg-white border border-outline-variant rounded-lg p-2.5 text-sm text-primary" value="Stitch Tech Systems, Inc."/>
+                        </div>
+                        <button onclick="saveProfileSettings()" class="bg-secondary hover:bg-[#0F766E] text-white font-bold py-2.5 px-5 rounded-lg text-xs transition-colors shadow-sm">
+                            Save Profile Preferences
                         </button>
                     </div>
-                    <hr class="border-outline-variant"/>
-                    <div>
-                        <h3 class="font-headline-sm font-semibold text-lg text-primary mb-2">Rules Engine Status</h3>
-                        <p class="font-body-sm text-xs text-on-surface-variant mb-2">50-State Unemployment Rules Database: <span class="text-secondary font-bold">Active &amp; Current</span></p>
-                        <p class="font-body-sm text-xs text-outline mb-2">Version: 2026.1.4 (Aligned with latest state legislation changes).</p>
+
+                    <!-- Local Storage & Privacy -->
+                    <div class="glass-card space-y-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 text-primary font-headline-sm font-bold text-lg border-b border-outline-variant pb-2 mb-3">
+                                <span class="material-symbols-outlined text-secondary">security</span>
+                                <h3>Local Sandbox &amp; Session Storage</h3>
+                            </div>
+                            <p class="font-body-sm text-xs text-on-surface-variant mb-4 leading-relaxed">
+                                Your uploaded documents, extracted clauses, and financial roadmap inputs are persisted strictly in your browser's <code class="bg-surface-container px-1.5 py-0.5 rounded text-primary">localStorage</code>. No personal data is ever transmitted to an external server.
+                            </p>
+                            <div id="settings-storage-stats" class="bg-surface-container-low p-3.5 rounded-lg border border-outline-variant/60 text-xs space-y-1 text-on-surface-variant mb-4">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-outline-variant flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                                <h4 class="font-bold text-xs text-primary">Rules Engine v2026.2 (50 States + D.C.)</h4>
+                                <p class="text-[11px] text-outline">Includes lump-sum vs. continuation &amp; COBRA runway models</p>
+                            </div>
+                            <button onclick="clearLocalSessionData()" class="bg-error text-white font-bold py-2.5 px-4 rounded-lg hover:bg-[#93000a] text-xs transition-colors flex items-center gap-1.5 shadow-sm">
+                                <span class="material-symbols-outlined text-[16px]">delete_forever</span>
+                                Reset All Session Data
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -788,19 +1013,23 @@
         
     </div>
 
-    <!-- BottomNavBar for Mobile (Shared Component) -->
-    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-surface border-t border-outline-variant shadow-md pb-safe shrink-0">
-        <a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1.5 scale-95 transition-all font-bold" href="#intake">
+    <!-- BottomNavBar for Mobile -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-2.5 bg-surface border-t border-outline-variant shadow-md pb-safe shrink-0">
+        <a data-nav="intake" class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1.5 transition-all font-bold" href="#intake">
             <span class="material-symbols-outlined text-[20px]">upload_file</span>
             <span class="font-label-sm text-[10px] mt-0.5">Intake</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant p-2 rounded-lg transition-colors" href="#roadmap">
+        <a data-nav="roadmap" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant px-4 py-1.5 rounded-full transition-colors" href="#roadmap">
             <span class="material-symbols-outlined text-[20px]">query_stats</span>
             <span class="font-label-sm text-[10px] mt-0.5">Roadmap</span>
         </a>
-        <a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant p-2 rounded-lg transition-colors" href="#advocacy">
+        <a data-nav="advocacy" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant px-4 py-1.5 rounded-full transition-colors" href="#advocacy">
             <span class="material-symbols-outlined text-[20px]">gavel</span>
             <span class="font-label-sm text-[10px] mt-0.5">Advocacy</span>
+        </a>
+        <a data-nav="settings" class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant px-4 py-1.5 rounded-full transition-colors" href="#settings">
+            <span class="material-symbols-outlined text-[20px]">settings</span>
+            <span class="font-label-sm text-[10px] mt-0.5">Settings</span>
         </a>
     </nav>
 
@@ -821,50 +1050,50 @@
             <!-- Modal Body -->
             <div class="flex-grow overflow-y-auto p-6">
                 <form id="quiz-form" class="space-y-4">
-                    <div id="quiz-questions" class="space-y-4">
-                        <p class="font-body-sm text-xs text-on-surface-variant mb-4">
-                            Check all conditions that applied to your working relationship with your hiring organization. This questionnaire uses state department of labor guidelines (ABC test standards).
+                    <div id="quiz-questions" class="space-y-3">
+                        <p class="font-body-sm text-xs text-on-surface-variant mb-3">
+                            Check all conditions that applied to your working relationship. This diagnostic evaluates Department of Labor <strong>ABC Test</strong> and <strong>Common-Law Behavioral/Financial Control</strong> factors.
                         </p>
                         
                         <label class="flex items-start gap-3 p-3 border border-outline-variant/40 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
                             <input type="checkbox" name="q" value="1" class="rounded text-secondary border-outline-variant focus:ring-secondary mt-0.5"/>
                             <span class="font-body-sm text-xs text-on-surface select-none leading-relaxed">
-                                **Equipment & Accounts**: The company provided your primary computer, key software licenses, and/or standard working equipment.
+                                <strong>Equipment &amp; Accounts:</strong> The company provided your primary computer, software licenses, or corporate email/tools.
                             </span>
                         </label>
                         
                         <label class="flex items-start gap-3 p-3 border border-outline-variant/40 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
                             <input type="checkbox" name="q" value="2" class="rounded text-secondary border-outline-variant focus:ring-secondary mt-0.5"/>
                             <span class="font-body-sm text-xs text-on-surface select-none leading-relaxed">
-                                **Schedule Control**: A supervisor set your working hours, required you to log hours, or mandated daily team meeting attendance.
+                                <strong>Schedule Control:</strong> A manager dictated your work hours, required attendance at daily stand-ups, or approved time off.
                             </span>
                         </label>
                         
                         <label class="flex items-start gap-3 p-3 border border-outline-variant/40 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
                             <input type="checkbox" name="q" value="3" class="rounded text-secondary border-outline-variant focus:ring-secondary mt-0.5"/>
                             <span class="font-body-sm text-xs text-on-surface select-none leading-relaxed">
-                                **Payment Recurrence**: You were paid on a regular, recurring hourly or salary basis rather than a fixed project fee.
+                                <strong>Payment Recurrence:</strong> You were paid a recurring hourly/weekly/monthly rate rather than per-project milestone invoices.
                             </span>
                         </label>
                         
                         <label class="flex items-start gap-3 p-3 border border-outline-variant/40 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
                             <input type="checkbox" name="q" value="4" class="rounded text-secondary border-outline-variant focus:ring-secondary mt-0.5"/>
                             <span class="font-body-sm text-xs text-on-surface select-none leading-relaxed">
-                                **Core Operations**: The work you performed is a core element of the company's daily business services, not a peripheral project.
+                                <strong>Core Business Operations:</strong> Your work was part of the company's regular core product/service (ABC Test Prong B).
                             </span>
                         </label>
 
                         <label class="flex items-start gap-3 p-3 border border-outline-variant/40 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
                             <input type="checkbox" name="q" value="5" class="rounded text-secondary border-outline-variant focus:ring-secondary mt-0.5"/>
                             <span class="font-body-sm text-xs text-on-surface select-none leading-relaxed">
-                                **Exclusivity**: You had restrictions preventing you from working for competitors, or you worked exclusively for this company.
+                                <strong>Exclusivity / Non-Compete:</strong> You were restricted from working for other clients or lacked an independent business entity.
                             </span>
                         </label>
 
                         <label class="flex items-start gap-3 p-3 border border-outline-variant/40 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
                             <input type="checkbox" name="q" value="6" class="rounded text-secondary border-outline-variant focus:ring-secondary mt-0.5"/>
                             <span class="font-body-sm text-xs text-on-surface select-none leading-relaxed">
-                                **Direction & Integration**: The organization supervised your workflow directly or trained you in specific protocols.
+                                <strong>Behavioral Supervision:</strong> The organization directed <em>how</em> your tasks were performed and evaluated your performance like an employee.
                             </span>
                         </label>
                     </div>
@@ -879,7 +1108,7 @@
                             <!-- Populated dynamically -->
                         </div>
                         <button id="quiz-unlock-btn" type="button" class="w-full bg-[#0D9488] text-white hover:bg-[#0F766E] font-bold py-3 rounded-lg flex items-center justify-center gap-2 min-h-[48px] shadow-sm">
-                            <span class="material-symbols-outlined">feed</span> Unlock 1099 Dispute Template
+                            <span class="material-symbols-outlined">feed</span> Generate 1099 Misclassification Dispute Letter
                         </button>
                     </div>
                 </form>
@@ -888,10 +1117,10 @@
             <!-- Modal Footer -->
             <div class="bg-surface-container-low border-t border-outline-variant px-6 py-4 flex justify-end gap-3 shrink-0">
                 <button onclick="document.getElementById('close-quiz-btn').click()" type="button" class="border border-outline-variant bg-transparent text-primary hover:bg-surface-variant font-bold py-2 px-4 rounded-lg min-h-[40px] text-xs">
-                    Cancel
+                    Close
                 </button>
-                <button id="quiz-submit-btn" form="quiz-form" type="submit" class="bg-secondary hover:bg-on-secondary-fixed text-white font-bold py-2 px-4 rounded-lg min-h-[40px] text-xs shadow-sm">
-                    Submit Diagnostic
+                <button id="quiz-submit-btn" form="quiz-form" type="submit" class="bg-secondary hover:bg-[#0F766E] text-white font-bold py-2 px-4 rounded-lg min-h-[40px] text-xs shadow-sm">
+                    Evaluate Classification
                 </button>
             </div>
         </div>
@@ -904,7 +1133,7 @@
             <div class="bg-surface-container-low border-b border-outline-variant px-6 py-4 flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-2 text-primary font-bold text-lg">
                     <span class="material-symbols-outlined text-secondary fill">shield_lock</span>
-                    <h3>Secure Document Vault</h3>
+                    <h3>Sample Document Vault</h3>
                 </div>
                 <button id="close-vault-btn" class="text-on-surface-variant hover:text-primary">
                     <span class="material-symbols-outlined">close</span>
@@ -914,7 +1143,7 @@
             <!-- Modal Body -->
             <div class="flex-grow overflow-y-auto p-6 bg-[#f8f9ff]">
                 <p class="font-body-sm text-xs text-on-surface-variant mb-4 leading-relaxed">
-                    Select a document stored in your secure client-side vault to parse its parameters and update your financial roadmap.
+                    Select any sample separation document below to test multi-state rules (WA, CA, TX, FL), clause scanning, and automatic roadmap calculation.
                 </p>
                 <div id="vault-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Populated dynamically by app.js -->
@@ -925,6 +1154,61 @@
             <div class="bg-surface-container-low border-t border-outline-variant px-6 py-4 flex justify-end gap-3 shrink-0">
                 <button id="close-vault-footer-btn" class="border border-outline-variant bg-transparent text-primary hover:bg-surface-variant font-bold py-2 px-4 rounded-lg min-h-[40px] text-xs">
                     Close Vault
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILING & LEGAL AID SUPPORT MODAL -->
+    <div id="support-modal" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-50 hidden justify-center items-center p-4">
+        <div class="bg-white rounded-xl border border-outline-variant max-w-xl w-full overflow-hidden shadow-lg flex flex-col max-h-[90vh]">
+            <div class="bg-surface-container-low border-b border-outline-variant px-6 py-4 flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2 text-primary font-bold text-lg">
+                    <span class="material-symbols-outlined text-secondary">support_agent</span>
+                    <h3>State Filing &amp; Worker Advocacy Resources</h3>
+                </div>
+                <button onclick="closeSupportModal()" class="text-on-surface-variant hover:text-primary">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-4 overflow-y-auto text-xs text-on-surface-variant">
+                <div id="support-state-card" class="p-4 rounded-xl bg-[#eff4ff] border border-[#cbdbf5] text-primary">
+                    <!-- Dynamic state portal info -->
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <a href="https://www.careeronestop.org/LocalHelp/UnemploymentBenefits/find-unemployment-benefits.aspx" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-lg border border-outline-variant hover:border-secondary hover:bg-surface-container-low transition-colors block">
+                        <h4 class="font-bold text-primary text-sm mb-1 flex items-center justify-between">
+                            <span>U.S. DOL CareerOneStop</span>
+                            <span class="material-symbols-outlined text-[15px] text-secondary">open_in_new</span>
+                        </h4>
+                        <p>Official U.S. Department of Labor directory of state unemployment offices and phone hotlines.</p>
+                    </a>
+                    <a href="https://www.dol.gov/agencies/whd/flsa/misclassification" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-lg border border-outline-variant hover:border-secondary hover:bg-surface-container-low transition-colors block">
+                        <h4 class="font-bold text-primary text-sm mb-1 flex items-center justify-between">
+                            <span>1099 Misclassification Guide</span>
+                            <span class="material-symbols-outlined text-[15px] text-secondary">open_in_new</span>
+                        </h4>
+                        <p>Federal Wage and Hour Division guidance on independent contractor vs. employee rights.</p>
+                    </a>
+                    <a href="https://www.healthcare.gov/unemployed/cobra-coverage/" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-lg border border-outline-variant hover:border-secondary hover:bg-surface-container-low transition-colors block">
+                        <h4 class="font-bold text-primary text-sm mb-1 flex items-center justify-between">
+                            <span>COBRA vs. ACA Marketplace</span>
+                            <span class="material-symbols-outlined text-[15px] text-secondary">open_in_new</span>
+                        </h4>
+                        <p>Compare expensive COBRA continuation premiums against Special Enrollment ACA plans.</p>
+                    </a>
+                    <a href="https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-lg border border-outline-variant hover:border-secondary hover:bg-surface-container-low transition-colors block">
+                        <h4 class="font-bold text-primary text-sm mb-1 flex items-center justify-between">
+                            <span>Find Free Legal Aid (LSC)</span>
+                            <span class="material-symbols-outlined text-[15px] text-secondary">open_in_new</span>
+                        </h4>
+                        <p>Locate free or low-cost employment law clinics for contested unemployment appeals.</p>
+                    </a>
+                </div>
+            </div>
+            <div class="bg-surface-container-low border-t border-outline-variant px-6 py-3.5 flex justify-end">
+                <button onclick="closeSupportModal()" class="bg-primary text-white font-bold py-2 px-5 rounded-lg text-xs">
+                    Close
                 </button>
             </div>
         </div>
